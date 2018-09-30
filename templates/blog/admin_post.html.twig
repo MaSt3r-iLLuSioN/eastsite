@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+{% block title %}Site Blog Posts{% endblock %}
+{% block page_header %}Site Blog Posts{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <a href="/admin/blog/add" class="btn btn-common btn-sm pull-right m-a-1">Add Blog Post</a>
+            <table class="table">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Post Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="width:100%;">
+                    {% if posts is empty %}
+                        <tr>
+                            <td>No Blog Posts have been added.</td>
+                        </tr>
+                    {% else %}
+                        {% for post in posts %}
+                            <tr>
+                                <td><a href="/blog/{{post.generateurl}}">{{post.title}}</a></td>
+                                <td>{{post.category.title}}</td>
+                                <td><a href="/admin/users/view/{{post.author.id}}" class="btn btn-common btn-sm">{{post.author.username}}</a></td>
+                                <td>{{post.datetime|date('m-d-Y')}}</td>
+                                <td>
+                                    <a href="/admin/blog/{{post.id}}/edit" class="btn btn-common btn-sm">Edit</a>
+                                    <a href="/admin/blog/{{post.id}}/delete" class="btn btn-common btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% block title %}{{project.title}}{% endblock %}
+{% block metakeywords %}
+        <meta name="keywords" content="{{project.keywords}}">
+        <meta name="description" content="{{project.metadescription}}">
+{% endblock %}
+{% block page_header %}{{project.title}}{% endblock %}
+{% block body %}
+    <article class="blog-post-wrapper">
+        <section class="featured-wrapper col-md-6 m-l-1 m-t-1 m-r-1 m-b-1">
+            {% if slideshow != null %}
+                {{slideshow| raw}}
+            {% endif %}
+        </section>
+
+        <header class="author-info">
+            <h2 class="blog-post-title">{{project.title}}</h2>
+            <hr>
+        </header>
+
+        <section class="blog-post-content p-t-0">
+            <div class="col-md-5 tag-posted-in p-r-0">
+                <ul class="list-unstyled">
+                    <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa fa-calendar"  style="color:#fff;"></i> {{project.datetime|date('m-d-Y')}}</li>
+                    <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-pencil-square-o"  style="color:#fff;"></i> <a  style="color:#fff;" href="/projects{{project.category.url}}">{{project.category.title}}</a></li>
+                    {% if project.status == 1 %}
+                        <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-gavel" style="color:#fff;"></i> In Progress</li>
+                    {% else %}
+                        <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-check" style="color:#fff;"></i>Completed</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-md-5 p-l-0 p-r-0 m-b-1">
+                <div class="col-sm-4 sharethis-inline-share-buttons p-r-0 p-l-0"></div>
+                <div class="col-sm-8 blog-post-footer pull-right p-l-0" style="border:none;padding:0px;">
+                    <ul class="post-meta">
+                        <li>
+                            {{liker|raw}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+        </section>
+        <section class="blog-post-content m-t-2">
+            <div class="blog-post" style="margin-left:20px;margin-right:20px;">
+                <br>
+                <h3>About This Project..</h3>
+                <hr>
+                {{project.content|raw}}
+            </div>
+        </section>
+    </article>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit {{ role.title }} Permissions{% endblock %}
+{% block page_header %}Edit {{ role.title }} Permissions{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <form class="shake" action="{{ path('rolePermissions', {'role':role.id}) }}" method="post">
+                {% for category in categories %}
+                    <table class="table table{{category.title}}{{role.id}}">
+                        <thead class="thead-inverse accordion-toggle collapsed custom-table-{{category.title}}{{role.id}}" aria-expanded="false" data-toggle="collapse" data-target="#colapse{{category.title}}{{role.id}}">
+                            <tr>
+                                <th>{{category.title}}</th>
+                                <th></th>
+                                <th><i class="custom-table-{{category.title}}{{role.id}}-icon fa fa-plus pull-right"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="colapse{{category.title}}{{role.id}}" aria-expanded="false" class="collapse" style="width:100%;">
+                            {% for permission in category.permissions %}
+                                <tr>
+                                    <td>{{permission.title}}</td>
+                                    <td>{{permission.description}}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="{{"permission_"~permission.id}}" class="sr-only">Permission Enabled:</label>
+                                            {{form_widget(form["permission_"~permission.id])}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+                
+                {{form_widget(form.submit)}}  
+                <a href="/admin/roles" class="btn btn-common btn-md m-r-1 pull-right"><i class="fa fa-ban"></i>Cancel</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        {% for category in categories %}
+            $('.table{{category.title}}{{role.id}}').on('hidden.bs.collapse', function(e){
+                $(e.target)
+                        .prev('.custom-table-{{category.title}}{{role.id}}')
+                        .find(".custom-table-{{category.title}}{{role.id}}-icon")
+                        .toggleClass('fa-plus fa-minus');
+                $('#colapse{{category.title}}{{role.id}}').attr({'aria-expanded':false});                  
+            });
+            $('.table{{category.title}}{{role.id}}').on('shown.bs.collapse', function(e){
+                $(e.target)
+                        .prev('.custom-table-{{category.title}}{{role.id}}')
+                        .find(".custom-table-{{category.title}}{{role.id}}-icon")
+                        .toggleClass('fa-plus fa-minus');
+                $('#colapse{{category.title}}{{role.id}}').addClass('tableDisplay');
+            });
+        {% endfor %}
+    </script>
+{% endblock %}

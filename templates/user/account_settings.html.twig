@@ -1,0 +1,14 @@
+<form class="shake" enctype="multipart/form-data" action="{{ path('account') }}" method="post">
+    <fieldset>
+        <legend>Basic Settings</legend>
+        <div class="form-group">
+            <label for="bio" class="">A Little About You:</label>
+            {{form_widget(form.bio)}}
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Avatar</legend>
+        {{form_widget(form.postfile)}}
+    </fieldset>
+    {{form_widget(form.submit)}}
+</form>

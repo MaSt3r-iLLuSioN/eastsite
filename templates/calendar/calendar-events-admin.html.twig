@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+{% block title %}Calendar: {{calendar.title}} Events{% endblock %}
+{% block page_header %}Calendar: {{calendar.title}} Events{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="pull-right m-r-1 m-b-1">
+            <a href="/admin/calendar/{{calendar.id}}/events/add" class="btn btn-common btn-sm">Add A Event</a>
+        </div>
+        <table class="table">
+            <thead>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Attendees</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {% if calendar.events is empty %}
+                    <td>No events have been added to this calendar yet!</td>
+                {% endif %}
+                {% for event in calendar.events %}
+                    <tr>
+                        <td><a href="/calendar/{{calendar.id}}">{{event.title}}</a></td>
+                        <td>{{event.description}}</td>
+                        <td>{{event.datestart|date('m-d-Y')}}</td>
+                        <td>{{event.dateend|date('m-d-Y')}}</td>
+                        <td>{% for attendee in event.attendees %}{{attendee.username}}<br>{{attendee.email}}{% endfor %}</td>
+                        <td>
+                            <a class="btn btn-common btn-sm" href="/admin/calendar/{{calendar.id}}/events/{{event.id}}/edit">Edit Event</a>
+                            <a class="btn btn-common btn-sm" href="/admin/calendar/{{calendar.id}}/events/{{event.id}}/delete">Delete Event</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

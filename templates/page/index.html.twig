@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+{% block title %}{{page.title}}{% endblock %}
+{% block page_header %}{{page.title}}{% endblock %}
+{% block body %}
+    <div class="row">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-md-4 pull-right">
+                <a href="/admin/pages/{{page.url}}/edit" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Page</a>
+                <a href="/admin/pages/{{page.url}}/delete" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Delete Page</a>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="row">
+        <section class="featured-wrapper">
+            {% if slideshow != null %}
+                {{slideshow| raw}}
+            {% endif %}
+        </section>
+        {{page.content | raw}}
+    </div>
+    {% if page.showsubpages == true %}
+        <section class="section" id="team">
+        <div class="row">
+            {% for subPage in page.pages %}
+                
+                
+                
+                
+                <div class="col-sm-6 col-md-4">
+                    <div class="team-item wow fadeInUpQuick animated" data-wow-delay="1s" style="visibility: visible;-webkit-animation-delay: 1s; -moz-animation-delay: 1s; animation-delay: 1s;">
+                        <figure class="team-profile">
+                            {% if subPage.filecount > 0 %}
+                                {% set found = false %}
+                                <div id="carousel-area">
+                                {% for file in subPage.files %}
+                                    {% if found == false %}
+                                        <div class="carousel-item">
+                                            <div class="container">
+                                            <img class="img-responsive img-rounded" width="100%" src="{{file.url}}" alt="{{file.description}}">
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <figcaption class="our-team">
+                                <div class="details text-center">
+                                <p class="content-white">{{subPage.contentshort}}<br /><br />
+                                <a class="btn btn-common" href="{{subPage.url}}">Read More</a></p>
+
+                                </div>
+                            </figcaption>
+                        </figure>
+
+                        <div class="info">
+                            <h2><a href="{{subPage.url}}">{{subPage.title}}</a></h2>
+
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+            {% endfor %}
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}

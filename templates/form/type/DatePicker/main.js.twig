@@ -1,0 +1,17 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+<script src="/assets/libraries/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    
+    $(document).ready(function(e){
+        $(".{{id}}").datetimepicker({
+            format: "MM/DD/YYYY h:mm a",
+            {% if defaultDate != false %}
+                defaultDate: '{{defaultDate|raw}}',
+            {% endif %}
+        });
+        $(".{{id}}").val('{{defaultDate|raw}}');
+    })
+</script>

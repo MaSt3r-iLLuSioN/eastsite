@@ -1,0 +1,67 @@
+<form id="filterizerForm" style="padding-right:10px;">
+    <div class="row m-b-1">  
+        <div class="col-md-8">
+            <select id="perPage" name="perPage" data-style="btn-common btn-sm" class="selectpicker" data-width="auto">
+                <option value="0" {%if perPage == 0%}selected="selected"{%endif%} data-content="6 Per Page">5 Per Page</option>
+                <option value="1" {%if perPage == 1%}selected="selected"{%endif%} data-content="12 Per Page">10 Per Page</option>
+                <option value="2" {%if perPage == 2%}selected="selected"{%endif%} data-content="18 Per Page">15 Per Page</option>
+            </select>
+            <select id="sortBy" name="sortBy" data-style="btn-common btn-sm" class="selectpicker" data-width="auto">
+                <option value="0" {%if sortBy == 0%}selected="selected"{%endif%} data-content="Sort By"> 10</option>
+                <option value="1" {%if sortBy == 1%}selected="selected"{%endif%} data-content="Title A-Z"> 20</option>
+                <option value="2" {%if sortBy == 2%}selected="selected"{%endif%} data-content="Title Z-A"> 30</option>
+            </select>
+            <div class="btn-group">
+                <button id="filterizerMoreBtn" class="btn-common btn-sm" style="height:43px;" data-toggle="collapse" data-target="#filterizerMore" onclick="return false;">
+                    <span class="if-collapsed"><i class="fa fa-plus-circle"></i> More</span>
+                    <span class="if-not-collapsed"><i class="fa fa-minus-circle"></i> Less</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="pull-right m-r-1">  
+            <select id="nodeView" name="nodeView" data-style="btn-common btn-sm" class="selectpicker" data-width="auto">
+                <option value="0" {%if nodeView == 0%}selected="selected"{%endif%} data-content="<i class='fa fa-bars'></i> List View"> List View</option>
+                <option value="1" {%if nodeView == 1%}selected="selected"{%endif%} data-content="<i class='fa fa-th-large'></i> Grid View"> Grid View</option>
+                <option value="2" {%if nodeView == 2%}selected="selected"{%endif%} data-content="<i class='fa fa-table'></i> Table View"> Table View</option>
+            </select>
+        </div>
+    </div>
+    <div id="filterizerMore" class="collapse show">
+        <hr>
+        <div class="row">
+            {% for field in searchFields %}
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+                        <input id="{{field.name}}" name="{{field.name}}" value="{{field.value}}" type="text" placeholder="{{field.placeholder}}" class="form-control">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+</form>
+
+{% include "layout/pagination.html.twig" with {'pagination': data.pagination} %}
+            
+<div class="node_data" style="padding-right:10px;">
+    {% if templateType == 'table' %}
+        {% include data.tableStartTemplate %}
+        {% for node in data.nodes %}
+            {% include data.activeTemplate with {'node': node} %}
+        {% endfor %}
+        {% include data.tableEndTemplate %}
+    {% else%}
+        {% for node in data.nodes %}
+            {% if data.useLiker == true %}
+                {% include data.activeTemplate with {'node': node, 'useLiker': data.useLiker, 'likes': data.likes} %}
+            {% else %}
+                {% include data.activeTemplate with {'node': node, 'useLiker': data.useLiker} %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="clearfix"></div>
+<hr>
+{% include "layout/pagination.html.twig" with {'pagination': data.pagination} %}

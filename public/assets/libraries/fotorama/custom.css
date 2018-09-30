@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 2, 2018, 6:32:44 PM
+    Author     : Trey
+*/
+
+.fotorama__thumb-border {
+    border-color: red;
+}
+.fotorama__nav--thumbs {
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.fotorama__wrap {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+}
+.fotorama {
+    background-color:#282828;
+}

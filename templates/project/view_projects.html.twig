@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block title %}All Projects{% endblock %}
+{% block page_header %}All Projects{% endblock %}
+{% block body %}
+    <div class="row">
+        {% if projects is empty %}
+            <p>No projects have been added to the site yet. Come back soon to check for new projects.</p>
+        {% else %}
+            {{mapper|raw}}
+            {{filterizer|raw}}
+        {% endif %}
+    </div>
+{% endblock %}

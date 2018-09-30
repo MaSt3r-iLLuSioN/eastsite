@@ -1,0 +1,117 @@
+<div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+        <h5 class="mb-0">
+            <h3 data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              Slideshow Settings
+            </h3>
+        </h5>
+    </div>
+
+    <div id="collapseTwo" class="collapse in" role="tabPanel" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="navType" class="">Thumbnail Type  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Specify how the image thumbnail should look (if you decide to use thumbnails)."></i></label>
+                            {{form_widget(form.navType)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <div class="form-group">
+                            <label for="navPosition" class="">Thumbnail Position  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Specify where the thumbnails will display."></i></label>
+                            {{form_widget(form.navPosition)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="fullscreen" class="">Allow Fullscreen  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Allow slideshow to be viewed in Fullscreen mode."></i></label>
+                            {{form_widget(form.fullscreen)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="transition" class="">Slideshow Transition  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="How the images will transition when the slideshow is playing."></i></label>
+                            {{form_widget(form.transition)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="clicktransition" class="">Click Transition  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="How the images will transition when the slideshow is clicked."></i></label>
+                            {{form_widget(form.clicktransition)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="transitionDuration" class="">Transition Duration <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="How long each image transition will take."></i></label>
+                            {{form_widget(form.transitionDuration)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="captions" class="">Display Captions <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Display image description in slideshow?"></i></label>
+                            {{form_widget(form.captions)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="autoplay" class="">Autoplay Slideshow <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the slideshow start playing automatically?"></i></label>
+                            {{form_widget(form.autoplay)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="stopautoplay" class="">Stop Autoplay On Touch Or Click <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the slideshow stop playing when it is clicked or touched?"></i></label>
+                            {{form_widget(form.stopautoplay)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="keyboard" class="">Enable Keyboard Support <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Allow to use keyboard arrows to change slideshow slides?"></i></label>
+                            {{form_widget(form.keyboard)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="arrows" class="">Display Controls <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the slideshow controls be displayed?"></i></label>
+                            {{form_widget(form.arrows)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="click" class="">Show Next On Click <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the slideshow go to the next slide when it is clicked?"></i></label>
+                            {{form_widget(form.click)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="swipe" class="">Show Next On Swipe <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the slideshow go to the next slide when it is swiped via a touch screen?"></i></label>
+                            {{form_widget(form.swipe)}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="direction" class="">Slideshow Play Direction <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The side that the slide will move to when it is transitioning to the next slide."></i></label>
+                            {{form_widget(form.direction)}}
+                        </div>
+                    </div>
+                </div>
+                {{form_widget(form.postfile)}}
+            </div>    
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

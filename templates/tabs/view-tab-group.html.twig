@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block title %}Viewing {{ tabGroup.title }}{% endblock %}
+{% block page_header %}Viewing {{ tabGroup.title }}{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <h1>{{ tabGroup.title }} Example:</h1>
+                <div id="default-tab" class="mt-10">
+                    
+                    <div class="col pull-right">
+                        <a href="/admin/tabs/{{tabGroup.id}}/add" class="btn btn-common btn-md m-r-1"><i class="fa fa-plus-square"></i>Add Tab</a>
+                    </div>
+                    
+                    <ul class="nav nav-tabs" role="tablist">
+                        {% for tab in tabGroup.tabs %}
+                            <li class="nav-item"><a class="nav-link {% if loop.index == 1 %}active{% endif %}" href="#{{tab.mt}}" aria-controls="{{tab.mt}}" role="tab" data-toggle="tab">{{tab.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="tab-content">
+                        {% for tab in tabGroup.tabs %}
+                            <div role="tabpanel" class="tab-pane {% if loop.index == 1 %}active{% endif %}" id="{{tab.mt}}">
+                                {{tab.content}}
+                                <div class="col pull-right">
+                                    <a href="/admin/tabs/{{tabGroup.id}}/edit/{{tab.id}}" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Tab</a>
+                                    <a href="/admin/tabs/{{tabGroup.id}}/delete/{{tab.id}}" class="btn btn-common btn-md m-r-1"><i class="fa fa-trash"></i>Delete Tab</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

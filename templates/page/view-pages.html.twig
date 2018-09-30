@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block title %}All Site Pages{% endblock %}
+{% block page_header %}All Site Pages{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 pull-right">
+                    <a href="/admin/pages/add" class="btn btn-common btn-md m-r-1"><i class="fa fa-plus-square"></i>Add Page</a>
+                </div>
+                {% for page in pages %}
+                    <div class="col-md-4">
+                        <h3><a href="/page/{{page.url}}">{{page.title}}</a></h3>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

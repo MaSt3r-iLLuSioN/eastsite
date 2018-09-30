@@ -1,0 +1,5 @@
+<div class="{{id}}fotorama" data-nav="thumbs">
+    {% for file in files %}
+        <a href="{{file.url}}"><img src="{{file.thumburl}}"></a>
+    {% endfor %}
+</div>

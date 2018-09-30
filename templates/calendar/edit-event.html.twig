@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit Event: {{event.title}} For Calendar: {{calendar.title}}{% endblock %}
+{% block page_header %}Edit Event: {{event.title}} For Calendar: {{calendar.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('editCalendarEvent', {'calendar':calendar.id, 'event':event.id}) }}" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="title" class="">Event Title </label>
+                {{form_widget(form.title)}}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="location" class="">Event Location <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The location address the event will take place at."></i></label>
+                {{form_widget(form.location)}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="">Event Description</label>
+            {{form_widget(form.description)}}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="users" class="">Event Attendees <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The users that will be attending this event. All users will automatically be sent a notification about the event via email."></i></label>
+                {{form_widget(form.users)}}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="additionalattendees" class="">Additional Attendees <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="If you want to include someone in the event who isnt a site user just type their email here. Emails should be seperated by a comma. The person(s) will automatically be notified of the event via email."></i></label>
+                {{form_widget(form.additionalattendees)}}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6" data-provide="datepicker">
+                <label for="startdate" class="">Event Start Date & Time <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The date and time the event will start."></i></label>
+                {{form_widget(form.startdate)}}
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="enddate" class="">Event End Date & Time <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The date and time the event will end."></i></label>
+                {{form_widget(form.enddate)}}
+            </div>
+        </div>
+
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Event</button>
+        <a href="/admin/calendar/{{calendar.id}}/events" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

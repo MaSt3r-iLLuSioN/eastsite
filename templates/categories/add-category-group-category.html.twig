@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% block title %}Add A Category To Category Group: {{group.title}}{% endblock %}
+{% block page_header %}Add A Category To Category Group: {{group.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('addCategoryToGroup',{'group':group.id}) }}" method="post">
+        <div class="form-group">
+            <label for="title" class="">Category Title:</label>
+            {{form_widget(form.title)}}
+        </div>
+
+        <div class="form-group">
+            <label for="parentcategory" class="">Parent Category:<i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Add a parent if you want to create a category hierarchy."></i></label>
+            {{form_widget(form.parentcategory)}}
+        </div>
+
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Add Category</button>
+        <a href="/admin/category/{{group.id}}" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

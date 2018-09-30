@@ -1,0 +1,38 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+logout:
+    path: /logout
+google_connect:
+    path: /google/connect
+    controller: App\Controller\GoogleController::googleConnect
+google_connect_check:
+    path: /google/connect/check
+    controller: App\Controller\GoogleController::googleConnectCheck
+google_unlink:
+    path: /google/unlink
+    controller: App\Controller\GoogleController::googleUnlink
+facebook_connect:
+    path: /facebook/connect
+    controller: App\Controller\FacebookController::facebookConnect
+facebook_connect_check:
+    path: /facebook/connect/check
+    controller: App\Controller\FacebookController::facebookConnectCheck
+facebook_unlink:
+    path: /facebook/unlink
+    controller: App\Controller\FacebookController::facebookUnlink
+calendarConfig:
+    path: /admin/calendar/config
+    controller: App\Controller\ConfigController::calendarConfig
+userConfig:
+    path: /admin/users/config
+    controller: App\Controller\ConfigController::userConfig
+pagesConfig:
+    path: /admin/pages/config
+    controller: App\Controller\ConfigController::pagesConfig
+blogConfig:
+    path: /admin/blog/config
+    controller: App\Controller\ConfigController::blogConfig
+adminDashboard:
+    path: /admin
+    controller: App\Controller\ConfigController::adminDashboard

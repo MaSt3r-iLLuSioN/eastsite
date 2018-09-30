@@ -1,0 +1,28 @@
+{% import "blog/category_list_macro.html.twig" as cLMacro %}
+<div class="btn-group-vertical" style="width:100%;">
+    {% for category in categories %} 
+        {% if category.parent == null %}
+            {% if category.children|length %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-common btn-md dropdown-toggle" data-toggle="dropdown">
+                        {{category.title}} <span class="caret"></span></button>
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="width:100%;z-index: 9999;position:relative;">
+                        <li><a style="width:100%;" class="btn btn-common btn-sm" href="/blog/{{category.generateurl}}">{{category.title}}</a></li>
+                        <li class="dropdown-divider"></li>
+                        {%for child in category.children%}
+                            {{cLMacro.blogCategoryList(child, "-", "/blog/")}}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-common btn-md dropdown-toggle" data-toggle="dropdown">
+                        {{category.title}} <span class="caret"></span></button>
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a style="width:100%;" class="btn btn-common btn-sm" href="/blog/{{category.generateurl}}">{{category.title}}</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %} 
+    {% endfor %}
+</div>

@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit {{user.username}}'s Roles{% endblock %}
+{% block page_header %}Edit {{ user.username }}'s Roles{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('editUserRoles', {'user':user.id}) }}" method="post">
+        <table class="table">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody style="width:100%;">
+                    {% for role in roles %}
+                        {% if role.machinetitle == 'ROLE_USER' %}
+                        {% else %}
+                            <tr>
+                                <td>{{role.title}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="{{"role_"~role.id}}" class="sr-only">Role Enabled:</label>
+                                        {{form_widget(form["role_"~role.id])}}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{form_widget(form.submit)}}
+            <a href="/admin/users" class="btn btn-common btn-md m-r-1 pull-right"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

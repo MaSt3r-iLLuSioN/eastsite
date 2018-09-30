@@ -1,0 +1,15 @@
+{% macro singleLayerMacro(group, category) %}
+    {% import _self as self %}
+    {% if category is empty %}
+    {% else %}
+        <li>{{category.title}}
+            {% if category.system == 0 %}
+                <a href="/admin/category/{{group.id}}/edit/{{category.id}}" class="btn btn-common btn-xs m-r-1"><i class="fa fa-plus-square"></i>Edit</a>
+                <a href="/admin/category/{{group.id}}/delete/{{category.id}}" class="btn btn-common btn-xs m-r-1"><i class="fa fa-plus-square"></i>Delete</a>
+            {% endif %}
+            {% if category.children|length %}
+                <ul>{% for child in category.children %}{{ self.singleLayerMacro(group, child) }}{% endfor %}</ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endmacro %}

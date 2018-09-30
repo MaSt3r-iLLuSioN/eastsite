@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+        {% for key,url in breadcrumb %}
+            <li class="breadcrumb-item"><a href="{{ url }}">{{ key }}</a></li>
+        {% endfor %}
+    {% endfor %}
+    <li class="breadcrumb-item active">{{ activeBreadcrumb }}</li>
+</ol>

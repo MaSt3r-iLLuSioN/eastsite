@@ -1,0 +1,65 @@
+<article class="blog-post-wrapper">
+
+    <header class="author-info">
+        <h2 class="blog-post-title">{{post.title}}</h2>
+        
+    </header>
+
+    <section class="featured-wrapper col-md-6 col-md-offset-3 m-b-1">
+        {% if slideshow != null %}
+            {{slideshow| raw}}
+        {% endif %}
+    </section>
+
+    <section class="blog-post-content">
+        <div class="row">
+            <div class="col-sm-6 tag-posted-in pull-left">
+                <ul class="list-unstyled">
+                    <li><i class="fa fa fa-calendar"></i> {{post.datetime|date('m-d-Y')}}</li>
+                    <li><i class="fa fa-user"></i> {{post.author.username}}</li>
+                    <li><i class="fa fa-pencil-square-o"></i> <a href="/blog{{post.category.url}}">{{post.category.title}}</a></li>
+                    <!--<li><i class="fa fa-comments"></i> No comments</li>-->
+                </ul>
+            </div>
+            <div class="col-sm-3 sharethis-inline-share-buttons"></div>
+            <div class="col-md-3 blog-post-footer pull-right" style="border:none;padding:0px;">
+                
+                <ul class="post-meta">
+                    <li>
+                        {{liker|raw}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <hr>
+        <div class="blog-post clearfix">
+            {{post.content|raw}}
+        </div>
+    </section>
+    <section class="about-author-section mt-5">
+        <div class="media wow fadeIn animated" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+            <div class="media-left">
+                {% if 'http' in post.author.avatar %}<img class="img-circle img-responsive" src="{{posst.author.avatar}}" width="150px" height="150px" alt="" />{% elseif 'default' in post.author.avatar %}<img  class="img-circle img-responsive" src="/assets/img/users/{{post.author.avatar}}" width="150px" height="150px" alt="" />{% else %}<img  class="img-circle img-responsive" src="{{post.author.avatar}}" width="150px" height="150px" alt="" />{% endif %}
+            </div>
+            <div class="media-body">
+                <h4>About The Author: {{post.author.username}}</h4>
+                <p>{{post.author.bio|raw}}</p>
+            </div>
+        </div>
+        <div class="author-footer text-sm-center">
+            {% if post.author.facebookset == true %}
+                <a target="_blank" class="wow bounceIn animated" data-wow-delay="0.4s" href="#" style="visibility: visible;-webkit-animation-delay: 0.4s; -moz-animation-delay: 0.4s; animation-delay: 0.4s;"><i class="fa fa-facebook icon-box icon-sm"></i></a>
+            {% endif %}
+            {% if post.author.twitterset == true %}
+                <a target="_blank" class="wow bounceIn animated" data-wow-delay="0.5s" href="#" style="visibility: visible;-webkit-animation-delay: 0.5s; -moz-animation-delay: 0.5s; animation-delay: 0.5s;"><i class="fa fa-twitter icon-box icon-sm"></i></a>
+            {% endif %}
+            {% if post.author.googleset == true %}
+                <a target="_blank" class="wow bounceIn animated" data-wow-delay="0.6s" href="https://plus.google.com/{{post.author.googleid}}" style="visibility: visible;-webkit-animation-delay: 0.6s; -moz-animation-delay: 0.6s; animation-delay: 0.6s;"><i class="fa fa-google-plus icon-box icon-sm"></i></a>
+            {% endif %}
+        </div>
+    </section>
+    <!--
+    {{commentor|raw}}
+    -->
+</article>

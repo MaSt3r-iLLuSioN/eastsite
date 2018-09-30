@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Project{% endblock %}
+{% block page_header %}Add Project{% endblock %}
+{% block body %}
+    <form class="shake" enctype="multipart/form-data" action="{{ path('addProject') }}" method="post">
+        <fieldset>
+            <legend>Basic Settings</legend>
+            <div class="form-group">
+                <label for="title" class="">Project Title:</label>
+                {{form_widget(form.title)}}
+            </div>
+            
+            <div class="form-group col-md-6 p-0">
+                <label for="location">Project Location:</label>
+                {{form_widget(form.location)}}
+            </div>
+            <div class="form-group col-md-6 p-r-0">
+                <label for="style">Project Style:</label>
+                {{form_widget(form.style)}}
+            </div>
+            
+            <div class="form-group">
+                <label for="content" class="">Project Content:</label>
+                {{form_widget(form.content)}}
+            </div>
+            <div class="form-group">
+                <label for="category" class="">Project Status:</label>
+                {{form_widget(form.status)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Meta Settings</legend>
+            <div class="form-group">
+                <label for="metakeywords" class="">Meta Keywords:</label>
+                {{form_widget(form.metakeywords)}}
+            </div>
+            <div class="form-group">
+                <label for="metadescription" class="">Meta Description:</label>
+                {{form_widget(form.metadescription)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Category Settings</legend>
+            <div class="form-group">
+                <label for="category" class="">Project Category:</label>
+                {{form_widget(form.category)}}
+            </div>
+        </fieldset>
+            
+
+        {{form_widget(form.submit)}}
+        <a href="/admin/projects" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

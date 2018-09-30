@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit Category: {{category.title}}{% endblock %}
+{% block page_header %}Edit Category: {{category.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('editGroupCategory',{'group':group.id, 'category':category.id}) }}" method="post">
+        <div class="form-group">
+            <label for="title" class="">Category Title:</label>
+            {{form_widget(form.title)}}
+        </div>
+
+        <div class="form-group">
+            <label for="parentcategory" class="">Parent Category:</label>
+            {{form_widget(form.parentcategory)}}
+        </div>
+
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Category</button>
+        <a href="/admin/category/{{group.id}}" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

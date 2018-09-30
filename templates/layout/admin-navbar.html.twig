@@ -1,0 +1,23 @@
+{% import "layout/admin-navbar-macro.html.twig" as adminNavMacro %}
+
+    <div class="navbar navbar-fixed-bottom" style="background-color:#282828;border-top:1px solid #f7da77;">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">☰ Show/Hide Admin Toolbar</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav nav-inline" style="padding:0px;width:100%;text-align: center;">
+                        {% for menu in adminMenu %}
+                            <li class="nav-item dropdown" style="display:inline-block;min-width:8%;left:auto;right:auto;padding-bottom:5px;">
+                                <a class="nav-link {% if CurrentURI == menu.url%}active{% endif %}" href="{{menu.url}}">{{menu.title}}</a>
+                                {% if menu.childrencount > 0 %}
+                                    <div class="dropdown-menu"> 
+                                        {{adminNavMacro.adminNavbarMacro(menu)}}
+                                    </div>
+                                {% endif %}
+                            </li> | 
+                        {% endfor %}
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>

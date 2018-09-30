@@ -1,0 +1,19 @@
+{% macro blogCategoryList(category, string, urlType) %}
+    {% import _self as self %}
+    {% if category is empty %}
+    {% else %}
+        {% if category.children|length %}
+                <li class="dropdown-submenu pull-left">
+                    <a class="btn btn-common btn-sm" style="width:100%;" tabindex="{{category.id}}" href="{{urlType ~ category.generateurl}}">{{category.title}}</a>
+                    <span class="caret"></span>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for child in category.children %}
+                            {{ self.blogCategoryList(child, string ~ "-", urlType) }}
+                        {% endfor %}
+                    </ul>
+                </li>
+        {% else %}
+            <li><a class="btn btn-common btn-sm" style="width:100%;" href="{{urlType ~ category.generateurl}}">{{category.title}}</a></li>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

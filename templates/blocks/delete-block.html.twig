@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block title %}Delete Block: {{ block.title }}?{% endblock %}
+{% block page_header %}Delete Block: {{ block.title }}?{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <h3>Are you sure you want to delete block: {{block.title}}? This action cannot be undone.</h3>
+                <form class="shake" action="{{ path('deleteBlock', {'block':block.id}) }}" method="post">
+                        <div class="form-group">
+                            <label for="hidden" class="sr-only">hidden</label>
+                            {{form_widget(form.hidden)}}
+                        </div>
+                    <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-trash"></i> Delete Block</button>
+                    
+                <a href="/admin/blocks" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+            </div>
+        </div>
+{% endblock %}

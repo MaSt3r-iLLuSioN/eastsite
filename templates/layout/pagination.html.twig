@@ -1,0 +1,42 @@
+{% set fields = '' %}
+{% for field in pagination.searchFields %}
+    {% if(field.value != 0) %}
+        {% set fields = fields ~ "&" ~ field.name ~ "=" ~ field.value %}
+    {% endif %}
+{% endfor %}
+<div class="row" style="padding-right: 10px;">
+    <div class="col-md-3 p-t-2 pull-left">
+        <p>Displaying <strong>{{pagination.startDisplay}} - {{pagination.endDisplay}}</strong> Of <strong>{{pagination.numberOfNodes}}</strong></p>
+    </div>
+    <div class="col pull-right m-r-1">
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if pagination.currentPage == 1 %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{pagination.url~fields~'&perPage='~pagination.perPage~'&sortBy='~pagination.sortBy~'&nodeView='~pagination.nodeView ~ '&currentPage=' ~ pagination.previousPage}}" tabindex="-1">Previous</a>
+                    </li>
+                {% endif %}
+                {% for i in 1..pagination.pageCount %}
+                    {% if i == pagination.currentPage %}
+                        <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="{{pagination.url~fields~'&perPage='~pagination.perPage~'&sortBy='~pagination.sortBy~'&nodeView='~pagination.nodeView ~ '&currentPage=' ~ i}}">{{i}}</a></li>     
+                    {% endif %}
+                {% endfor %}
+                {% if pagination.currentPage != pagination.pageCount %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{pagination.url~'&perPage='~fields~pagination.perPage~'&sortBy='~pagination.sortBy~'&nodeView='~pagination.nodeView ~ '&currentPage=' ~ pagination.nextPage}}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>

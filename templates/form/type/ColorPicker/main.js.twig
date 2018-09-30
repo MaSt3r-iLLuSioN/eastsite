@@ -1,0 +1,10 @@
+<script language="javascript" type="text/javascript" src="/assets/libraries/colorpicker/js/jquery.colorPicker.min.js"/></script>
+<script language="javascript">
+    $(document).ready(function($) {
+      $('.{{id}}').colorPicker({
+          colors: [{% for color in colors %}"{{color}}",{% endfor %}],
+          showHexField: {% if showHexField == true %}true{% else %}false{% endif %},
+          pikerDefault: '{{pickerDefault}}'
+      });
+    })
+  </script>

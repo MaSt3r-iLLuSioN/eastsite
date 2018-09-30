@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Site Menu{% endblock %}
+{% block page_header %}Add Site Menu{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('addMenu') }}" method="post">
+        <div class="form-group">
+            <label for="title" class="">Menu Title</label>
+            {{form_widget(form.title)}}
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="">Role</label>
+            {{form_widget(form.role)}}
+        </div>
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Add Menu</button>
+        <a href="/admin/menus" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}All Blog Posts{% endblock %}
+{% block page_header %}All Blog Posts{% endblock %}
+{% block body %}
+    <div class="row">
+        {% if posts is empty %}
+            <p>No blog posts have been added to the site yet. Come back soon to check for new posts.</p>
+        {% else %}
+            {{filterizer|raw}}
+        {% endif %}
+    </div>
+{% endblock %}

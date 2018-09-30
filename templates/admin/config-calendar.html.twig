@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Block{% endblock %}
+{% block page_header %}Add Block{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12 contact-form contact-info-section">
+            <form class="shake" action="{{ path('configCalendar') }}" method="post">
+                <div class="form-group">
+                    <label for="googleuser" class="">Select A Admin Account <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="In order for the google calendar functionality to work properly, you must select a user from the list to use their google account for making calendars and events. Users in this list already have their google account linked to the site."></i></label>
+                    {{form_widget(form.googleuser)}}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

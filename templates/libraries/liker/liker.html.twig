@@ -1,0 +1,15 @@
+{% set likeIcon = '<i class="fa fa-thumbs-up"></i>' %}
+{% set youLikeThis = 'Like' %}
+{% set break = false %}
+{% if uid != 0 %}
+    {% for likedcontent in app.user.likablecontent if not break %}
+        {% if likedcontent.id == node.id %}
+            {% set likeIcon = '<i class="fa fa-thumbs-down"></i>' %}
+            {% set youLikeThis = 'Unlike'%}
+            {% set break=true %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<a id="like_node_{{node.id}}" class="btn badge badge-primary btn-common">{{ likeIcon|raw }} <span style="padding-right:10px;" class="text">{{youLikeThis}}</span><span class="badge badge-success badge-xs">{{node.likes}}</span></a>
+<input name="node_like_{{node.id}}" type="hidden" value="{{node.id}}">
+<div id="modal_{{node.id}}"></div>

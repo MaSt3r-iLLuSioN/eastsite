@@ -1,0 +1,17 @@
+<tr>
+    <td style="width:25%;">
+        {% for file in node.files %}
+            {% if loop.first %}
+                {% if file.type == 'png' or file.type == 'jpg' %}
+                    <a href="/projects{{node.category.url ~ '/' ~ node.systemtitle}}">
+                        <img src="{{asset(file.url)}}" width="90%" alt="">
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </td>
+    <td><a href="/projects/{{node.generateurl}}">{{node.title}}</a></td>
+    <td>{{node.category.title}}</td>
+    <td>{{node.datetime|date('m-d-Y')}}</td>
+    <td>{{node.contentshort|raw}}</td>
+</tr>

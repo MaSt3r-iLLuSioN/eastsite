@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block title %}{{title}}{% endblock %}
+{% block page_header %}{{title}}{% endblock %}
+{% block body %}
+    <form class="shake" enctype="multipart/form-data" action="{{ action }}" method="post">
+        <fieldset>
+            <legend>Basic Settings</legend>
+            <div class="form-group">
+                <label for="title" class="">Title:</label>
+                {{form_widget(form.title)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Category Settings</legend>
+            <div class="form-group">
+                <label for="category" class="">Texture Category:</label>
+                {{form_widget(form.category)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Texture File</legend>
+            {{form_widget(form.postfile)}}
+        </fieldset>
+
+        {{form_widget(form.submit)}}
+        <a href="{{cancel}}" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

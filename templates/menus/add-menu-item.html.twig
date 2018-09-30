@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Menu Item To {{menu.title}}{% endblock %}
+{% block page_header %}Add Menu Item To {{menu.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('addMenuItem',{'menu':menu.id}) }}" method="post">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="title" class="">Title</label>
+                {{form_widget(form.title)}}
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label for="description" class="">URL</label>
+                {{form_widget(form.url)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="description" class="">Parent</label>
+                {{form_widget(form.parent)}}
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label for="description" class="">Priority</label>
+                {{form_widget(form.priority)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="hascategory">Link Category Group</label>
+                {{form_widget(form.hascategory)}}
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="category">Category Group</label>
+                {{form_widget(form.category)}}
+            </div>
+        </div>
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Add Menu Item</button>
+        <a href="/admin/menus" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}Project Category: {{category.title}}{% endblock %}
+
+{% block page_header %}Project Category: {{category.title}}{% endblock %}
+{% block body %}
+        {% if projects is empty %}
+            <p>No projects have been added to this category yet. Come back soon to check for new prpjects.</p>
+        {% else %}
+            {{mapper|raw}}
+            {{filterizer|raw}}
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+{% block title %}{% if blogPost is empty %}Blog Category: {{category.title}}{% else %}{{blogPost.title}}{% endif %}{% endblock %}
+{% block metakeywords %}
+    {% if blogPost is empty %}
+    {% else %}
+        <meta name="keywords" content="{{blogPost.keywords}}">
+        <meta name="description" content="{{blogPost.metadescription}}">
+        <meta name="author" content="{{blogPost.author.username}}">
+    {% endif %}
+{% endblock %}
+{% block page_header %}{% if blogPost is empty %}Blog Category: {{category.title}}{% else %}{{blogPost.title}}{% endif %}{% endblock %}
+{% block body %}
+    {% if blogPost is empty %}
+        {% if posts is empty %}
+            <p>No blog posts have been added to this category yet. Come back soon to check for new posts.</p>
+        {% else %}
+            {{filterizer|raw}}
+        {% endif %}
+    {% else %}
+        {% include 'blog/blog-post-view.html.twig' with {'post': blogPost, 'slideshow':slideshow} %}
+    {% endif %}
+{% endblock %}

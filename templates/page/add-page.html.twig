@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Page{% endblock %}
+{% block page_header %}Add Page{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('addPage') }}" method="post">
+        
+        <fieldset>
+            <legend>Basic Settings</legend>
+            <div class="form-group">
+                <label for="title" class="">Title:</label>
+                {{form_widget(form.title)}}
+            </div>
+            <div class="form-group">
+                <label for="content" class="">Content:</label>
+                {{form_widget(form.content)}}
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Menu Settings</legend>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="addmenu" class="">Add Menu Item</label>
+                    {{form_widget(form.addmenu)}}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="menuparent" class="">Menu Parent</label>
+                    {{form_widget(form.menuparent)}}
+                </div>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Display Settings</legend>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="showsubpages" class="">Show Sub Pages?</label>
+                    {{form_widget(form.showsubpages)}}
+                </div>
+            </div>
+        </fieldset>
+                
+        <fieldset>
+            <legend>Meta Settings</legend>
+            <div class="form-group">
+                <label for="keywords" class="">Meta Keywords:</label>
+                {{form_widget(form.keywords)}}
+            </div>
+            <div class="form-group">
+                <label for="metadescription" class="">Meta Description:</label>
+                {{form_widget(form.metadescription)}}
+            </div>
+        </fieldset>
+            
+        <div class="form-group">
+            <label for="layout" class="">Layout:</label>
+            {{form_widget(form.layout)}}
+        </div>
+        <fieldset>
+            <legend>Page Files</legend>
+            {{form_widget(form.postfile)}}
+        </fieldset>
+
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Page</button>
+        <a href="/admin/page/viewAll" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

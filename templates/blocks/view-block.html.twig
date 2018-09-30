@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+{% block title %}Viewing Block: {{block.title}}{% endblock %}
+{% block page_header %}Viewing Block: {{block.title}}{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="row" style="border-bottom:1px solid #e1e1e1;">
+                    <div class="col-md-2">
+                        <p><strong>Block Type:</strong> {{block.type.title}}
+                        <br><strong>Priority:</strong> {{block.priority}}</p>
+                    </div>
+                    <div class="col-md-2"
+                         <p><strong>Regions:</strong> 
+                            <ul>    
+                                {% for region in block.regions %}
+                                    <li>{{region.title}}</li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        
+                        <p>{% if block.onpage == true %}<strong>Show On Pages:</strong>{% else %}<strong>Show On All Pages Except:</strong>{% endif %}</p>  
+                        <ul>
+                            {% for page in block.listedpagesarray %}
+                                {% if page != '' %}
+                                    <li>{{page}}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <a href="/admin/blocks/{{block.id}}/edit" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Block</a>
+                        <a href="/admin/blocks/{{block.id}}/delete" class="btn btn-common btn-md m-r-1"><i class="fa fa-trash"></i>Delete Block</a>
+                    </div>
+                </div>
+                <div class="site-block {{block.cssclass}}">
+                    {{ include('blocks/types/'~block.type.template~'.html.twig') }}
+                </div>
+            </div>
+        </div>
+{% endblock %}

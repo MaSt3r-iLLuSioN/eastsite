@@ -1,0 +1,13 @@
+{% if block.typeset == 1 %}
+    <aside class="widget text-widgets wow fadeIn animated {{block.cssclass}}" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s; z-index:1;">
+        <div class="block-widget">
+            {% if is_granted('edit_blocks') %}
+                <div class="edit-block"><a href="/admin/blocks/{{block.id}}/edit"><i class="fa fa-pencil fa-lg"data-toggle="tooltip" data-placement="top" title="Quick Edit Block"></i></a></div>
+            {% endif %}
+            {% if block.showtitle == true %}
+                <h2 class="widget-title">{{block.title}}</h2>
+            {% endif %}
+            {{ include('blocks/types/'~block.type.template~'.html.twig') }}
+        </div>
+    </aside>
+{% endif %}

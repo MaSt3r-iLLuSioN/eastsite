@@ -1,0 +1,47 @@
+<script>blockFotoramaData = false;</script>
+<script src="{{ asset('assets/js/fotorama.js') }}"></script>
+
+<script>
+    $('.{{id}}fotorama').fotorama({
+        width: '{{width}}',
+        minwidth: '{{minwidth}}',
+        maxwidth: '{{maxwidth}}',
+        height: '{{height}}',
+        minheight: '{{minheight}}',
+        maxheight: '{{maxheight}}',
+        ratio: '{{ratio}}',
+        margin: {{margin}},
+        glimpse: '{{glimpse}}',
+        nav: '{{nav}}',
+        navposition: '{{navposition}}',
+        navwidth: '{{navwidth}}',
+        thumbwidth: {{thumbwidth}},
+        thumbheight: {{thumbheight}},
+        thumbmargin: {{thumbmargin}},
+        thumbborderwidth: {{thumbborderwidth}},
+        allowfullscreen: {{allowfullscreen}},
+        fit: '{{fit}}',
+        thumbfit: '{{thumbfit}}',
+        transition: '{{transition}}',
+        clicktransition: '{{clicktransition}}',
+        transitionduration: {{transitionduration}},
+        captions: {{captions}},
+        hash: {{hash}},
+        startindex: '{{startindex}}',
+        loop: {{loop}},
+        autoplay: {{autoplay}},
+        stopautoplayontouch: {{stopautoplayontouch}},
+        keyboard: {{keyboard}},
+        {% if arrows != 'false' %}
+            arrows: '{{arrows}}',
+        {% else %}
+            arrows: {{arrows}},
+        {% endif %}
+        click: {{click}},
+        swipe: {{swipe}},
+        trackpad: {{trackpad}},
+        shuffle: {{shuffle}},
+        direction: '{{direction}}',
+        shadows: {{shadows}}
+    });
+</script>

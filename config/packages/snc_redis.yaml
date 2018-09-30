@@ -1,0 +1,30 @@
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost
+            logging: '%kernel.debug%'
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: redis://localhost
+            logging: '%kernel.debug%'
+
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'dmc:'
+        result_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'drc:'
+        query_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'dqc:'
+        second_level_cache:
+            client: doctrine
+            entity_manager: default
+            namespace: 'dslc:'

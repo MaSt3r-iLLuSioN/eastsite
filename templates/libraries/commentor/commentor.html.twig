@@ -1,0 +1,97 @@
+<div class="comments-area clearfix m-a-1 wow fadeIn animated" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+    <h3 class="small-title"><i class="fa fa-comment"></i> Comments</h3>
+    <ul class="media-left comment-list mt-30">
+        <li class="media">
+            <div class="media-left">
+                <a href="#"><img class="img-responsive img-circle" src="assets/img/blog/comment_avatar/avatar1.jpg" alt=""></a>
+            </div>
+            <div class="media-body">
+                <div class="commentor-info">
+                    <div class="comment-author">
+                    <a href="#">Al Amin Khan</a>
+                    <span class="published-time"><i class="fa fa-calendar"></i> 18 hrs ago</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos fuga, et maiores, veniam ipsa quod soluta nam, deleniti assumenda magnam sint sapiente voluptatem commodi eos.</p>
+                </div>
+                <div class="media reply">
+                    <div class="media-body">
+                        <div class="commentor-info">
+                            <div class="comment-author">
+                                <a href="#">Saifuddin</a>
+                                <span class="published-time"><i class="fa fa-calendar"></i> 18 hrs ago</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos fuga, et maiores, veniam ipsa quod soluta nam, deleniti assumenda magnam sint sapiente voluptatem commodi eos.</p>
+                            <a href="#">Reply</a>
+                        </div>
+                    </div>
+                    <div class="media-right">
+                        <a href="#"><img class="img-responsive img-circle" src="assets/img/blog/comment_avatar/avatar2.jpg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+    <div class="new-comment mt-5">
+        <h3 class="small-title">Post A New Comment</h3>
+        {% if uid != 0 %}
+            <form class="mt-30">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label class="sr-only" for="username">Name</label>
+                            <input type="text" placeholder="Full Name" id="username" required="" value="{{app.user.username}}" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label class="sr-only" for="useremail">Email</label>
+                            <input type="email" placeholder="Email Address" id="useremail" required="" value="{{app.user.email}}" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="sr-only" for="userurl">Website</label>
+                            <input type="text" placeholder="Your Website" id="userurl" required="" value="Non existent" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="usermessage">Message</label>
+                    <textarea placeholder="Type you're comment" id="usermessage" rows="7" required="" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-common" type="submit"><i class="fa fa-comment"></i> Post Comment</button>
+            </form>
+        {% elseif unregisteredUsers == true %}
+            <form class="mt-30">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label class="sr-only" for="username">Name</label>
+                            <input type="text" placeholder="Full Name" id="username" required="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label class="sr-only" for="useremail">Email</label>
+                            <input type="email" placeholder="Email Address" id="useremail" required="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="sr-only" for="userurl">Website</label>
+                            <input type="text" placeholder="Your Website" id="userurl" required="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="usermessage">Message</label>
+                    <textarea placeholder="Type you're comment" id="usermessage" rows="7" required="" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-common" type="submit"><i class="fa fa-comment"></i> Post Comment</button>
+            </form>
+        {% else %}
+            <p>Please <a href="/login">Login</a> or <a href="/register">Register</a> to post comments!<p/>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% if block.typeset == 1 %}
+    <div class="footer-widget wow fadeIn {{block.cssclass}}">
+        <div class="block-widget" style="padding:10px;">
+            {% if is_granted('edit_blocks') %}
+                <div class="edit-block"><a href="/admin/blocks/{{block.id}}/edit"><i class="fa fa-pencil fa-lg" data-toggle="tooltip" data-placement="top" title="Quick Edit Block"></i></a></div>
+            {% endif %}
+            {% if block.showtitle == true %}
+                <h3 class="small-title">{{block.title}}</h3>
+            {% endif %}
+            {{ include('blocks/types/'~block.type.template~'.html.twig') }}
+        </div>
+    </div>
+{% endif %}

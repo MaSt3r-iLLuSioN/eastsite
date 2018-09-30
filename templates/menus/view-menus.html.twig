@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+{% block title %}Site Menus{% endblock %}
+{% block page_header %}All Site Menus{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <a class="btn btn-common btn-sm" href="/admin/menus/add">Add Menu</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table m-a-0">
+                <thead class="thead-inverse accordion-toggle collapsed">
+                    <tr>
+                        <th>Menu Title</th>
+                        <th>Item Count</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="width:100%;">
+                    {% for menu in menus %}
+                        <tr>
+                            <td><a href="/admin/menus/{{menu.id}}">{{menu.title}}</a></td>
+                            <td>{{menu.itemcount}}</td>
+                            <td>
+                                {% if menu.role is empty %}
+                                    All Roles
+                                {% else %}
+                                    {{menu.role.title}}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/addItem">Add Item</a>
+                                {% if menu.id != 7 and menu.id != 6 %}
+                                    <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/edit">Edit</a>
+                                    <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/delete">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+    </div>
+{% endblock %}

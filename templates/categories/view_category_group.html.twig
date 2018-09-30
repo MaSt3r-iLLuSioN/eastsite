@@ -1,0 +1,26 @@
+{% import "categories/single-layer-macro.html.twig" as sLMacro %}
+{% extends "base.html.twig" %}
+{% block title %}Category Group: {{group.title}}{% endblock %}
+{% block page_header %}Viewing Category Group: {{group.title}}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 pull-right">
+                <a href="/admin/category/{{group.id}}/add" class="btn btn-common btn-xs m-r-1"><i class="fa fa-plus-square"></i>Add A Category</a>
+                {% if group.system == false %}
+                    <a href="/admin/category/{{group.id}}/edit" class="btn btn-common btn-xs m-r-1"><i class="fa fa-edit"></i>Edit Category Group</a>
+                    <a href="/admin/category/{{group.id}}/delete" class="btn btn-common btn-xs m-r-1"><i class="fa fa-trash"></i>Delete Category Group</a>
+                {% endif %}
+            </div>
+            {% if categories is empty %}
+                <p>You have not added any categories to this category group yet!</p>
+            {% else %}
+                <ul>
+                    {% for category in categories %}
+                        {{sLMacro.singleLayerMacro(group, category)}}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+
+  <!-- Row Starts -->
+  <div class="row section">
+    <!-- Footer Widget Starts -->
+    {% for block in footer_blocks %}
+        {% if block.enabled == true %}
+           {{ include('blocks/block-footer-container.html.twig') }}
+        {% endif %}
+    {% endfor %}
+  </div><!-- Row Ends -->
+
+<!-- Copyright -->
+<div id="copyright" class="col-md-12">
+    <div class="row" style="padding-left:5px;">
+      <div class="col-md-6 col-sm-6">
+        <p class="copyright-text">
+          ©  2018 Eastway Custom Homes. All rights reserved. Developed by <a href="https://www.indydevguy.com">IndyDevGuy</a>
+        </p>
+      </div>
+      <div class="col-md-6  col-sm-6">
+        <div class="social-footer pull-right" style="padding-right: 40px;"><a href="https://www.facebook.com/eastwaycustomhomes/"><i class="fa fa-facebook icon-round"></i></a> <a href="https://twitter.com/EastwayHomes"><i class="fa fa-twitter icon-round"></i></a> <a href="https://www.youtube.com/channel/UC5cQ-WHdkBruy7qWE53sA5w/featured "><i class="fa fa-youtube icon-round"></i></a> <a href="https://www.instagram.com/eastwaycustomhomes/?hl=en"><i class="fa fa-instagram icon-round"></i></a></div>
+      </div>
+    </div>
+</div>
+<!-- Copyright  End-->

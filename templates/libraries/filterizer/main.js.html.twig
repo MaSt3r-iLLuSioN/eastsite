@@ -1,0 +1,28 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function(e){
+        var nodeViewVal = $('#nodeView').val();
+        var perPageVal = $('#perPage').val();
+        var sortByVal = $('#sortBy').val();
+        $('#nodeView').on('hidden.bs.select', function (e) {
+            if (nodeViewVal != $('#nodeView').val())
+                $("#filterizerForm").submit();
+        }); 
+        $('#perPage').on('hidden.bs.select',function(e){
+            if (perPageVal != $('#perPage').val())
+                $("#filterizerForm").submit();
+        });
+        $('#sortBy').on('hidden.bs.select',function(e){
+            if (sortByVal != $('#sortBy').val()) 
+                $("#filterizerForm").submit();
+        });
+        {% for field in searchFields %}
+            $('#{{field.name}}').keypress(function(e){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    $("#filterizerForm").submit();
+                }
+            });
+        {% endfor %}
+    });
+</script>

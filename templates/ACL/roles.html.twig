@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+{% block title %}User Roles{% endblock %}
+{% block page_header %}User Roles{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <a href="/admin/roles/add" class="btn btn-common btn-md m-a-1 pull-right"><i class="fa fa-plus-square"></i>Add New Role</a>
+            <div class="clearfix"></div>
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                {% for role in roles %}
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading{{role.id}}">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseRegion{{role.id}}" aria-expanded="false" aria-controls="collapseRegion{{role.id}}">
+                                            {{role.title}}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <a href="/admin/roles/{{role.id}}/permissions" class="btn btn-common btn-sm pull-right m-r-1"><i class="fa fa-edit"></i>Edit Permissions</a>
+                                {% if role.system == false %}
+                                    <a href="/admin/roles/{{role.id}}/edit" class="btn btn-common btn-sm pull-right m-l-1 m-r-1"><i class="fa fa-edit"></i>Edit Role</a>
+                                    <a href="/admin/roles/{{role.id}}/delete" class="btn btn-common btn-sm pull-right"><i class="fa fa-trash"></i>Delete Role</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div id="collapseRegion{{role.id}}" class="collapse" role="tabpanel" aria-labelledby="heading{{role.id}}">
+                            <div class="card-block">
+                                <div class="row">
+                                    
+                                    {%for category in role.categories %}
+                                        <div class="col-md-4 p-a-0" style="border-right:1px solid #e1e1e1;border-bottom:1px solid #e1e1e1;margin-bottom: 5px;">
+                                            <table class="table table{{category.title}}{{role.id}} m-a-0">
+                                                <thead class="thead-inverse accordion-toggle collapsed custom-table-{{category.title}}{{role.id}}" aria-expanded="false" data-toggle="collapse" data-target="#colapse{{category.title}}{{role.id}}">
+                                                    <tr>
+                                                        <th>{{category.title}}</th>
+                                                        <th><i class="custom-table-{{category.title}}{{role.id}}-icon fa fa-plus pull-right"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="colapse{{category.title}}{{role.id}}" aria-expanded="false" class="collapse" style="width:100%;">
+                                                    {% for permission in category.permissions %}
+                                                        <tr>
+                                                            <td>{{permission.title}}</td>
+                                                            {% if permission.hasPermission == true %}
+                                                                <td><i class="icon-check pull-right"></i></td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>    
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        {% for role in roles %}
+            {% for category in role.categories %}
+                $('.table{{category.title}}{{role.id}}').on('hidden.bs.collapse', function(e){
+                    $(e.target)
+                            .prev('.custom-table-{{category.title}}{{role.id}}')
+                            .find(".custom-table-{{category.title}}{{role.id}}-icon")
+                            .toggleClass('fa-plus fa-minus');
+                    $('#colapse{{category.title}}{{role.id}}').attr({'aria-expanded':false});                  
+                });
+                $('.table{{category.title}}{{role.id}}').on('shown.bs.collapse', function(e){
+                    $(e.target)
+                            .prev('.custom-table-{{category.title}}{{role.id}}')
+                            .find(".custom-table-{{category.title}}{{role.id}}-icon")
+                            .toggleClass('fa-plus fa-minus');
+                    $('#colapse{{category.title}}{{role.id}}').addClass('tableDisplay');
+                });
+            {% endfor %}
+        {% endfor %}
+    </script>
+{% endblock %}

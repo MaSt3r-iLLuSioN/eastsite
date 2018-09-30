@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+{% block title %}My Account{% endblock %}
+{% block page_header %}My Account{% endblock %}
+{% block body %}
+    <div class="vertical-tab-area clearfix split section wow fadeIn animated" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h3 class="small-title mb-4">Account Dashboard</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="vertical-tab">
+
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#likes3" role="tab" aria-selected="true">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    My Likes
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#google3" role="tab" aria-selected="false">
+                                    <i class="fa fa-google"></i>
+                                    Google
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#facebook3" role="tab" aria-selected="false">
+                                    <i class="fa fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#settings3" role="tab" aria-selected="false">
+                                    <i class="fa fa-gears"></i>
+                                    Settings
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            
+                            <div class="tab-pane fade active in" id="likes3" role="tabpanel">
+                                {% for like in user.likablecontent%}
+                                    <p>{{like.title}}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="tab-pane fade" id="google3" role="tabpanel">
+                                <div class="row">
+                                    {% if user.googleset == true %}
+                                    <div class="col-md-4">
+                                        <img src="{{user.googleavatar}}" width="100%" alt="" />
+                                    </div>
+                                    <div class="col-md-8 text-center">
+                                        <h3>Name:</h3>
+                                        <p>{{user.googlename}}</p>
+                                        <h3>First Name:</h3>
+                                        <p>{{user.googlefirstname}}</p>
+                                        <h3>Last Name:</h3>
+                                        <p>{{user.googlelastname}}</p>
+                                        <h3>Id:</h3>
+                                        <p>{{user.googleid}}</p>
+                                        <a href="/google/unlink" class="btn btn-common btn-xs m-r-1"><i class="fa fa-unlink"></i>Unlink Google Account</a>
+                                    </div>
+                                    {% else %}
+                                        <a href="/google/connect" class="btn btn-common btn-xs m-r-1"><i class="fa fa-link"></i>Link Google Account</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                                
+                            <div class="tab-pane fade" id="facebook3" role="tabpanel">
+                                <div class="row">
+                                    {% if user.facebookset == true %}
+                                    <div class="col-md-4">
+                                        <img src="{{user.facebookavatar}}" width="150px" height="150px" alt="" />
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <h3>Username:</h3>
+                                        <p>{{user.facebookname}}</p>
+                                        <h3>Id:</h3>
+                                        <p>{{user.facebookid}}</p>
+                                        <h3>First Name:</h3>
+                                        <p>{{user.facebookfirstname}}</p>
+                                        <h3>Last Name:</h3>
+                                        <p>{{user.facebooklastname}}</p>
+                                        <h3>Gender:</h3>
+                                        <p>{{user.facebookgender}}</p>
+                                        <h3>Hometown:</h3>
+                                        <p>{{user.facebookhometown}}</p>
+                                        <h3>Profile Link:</h3>
+                                        <p><a class="btn btn-common btn-xs m-r-1" href="{{user.facebooklink}}">View Facebook Profile</a></p>
+                                        <a href="/facebook/unlink" class="btn btn-common btn-xs m-r-1"><i class="fa fa-unlink"></i>Unlink Facebook Account</a>
+                                    </div>
+                                    {% else %}
+                                        <a href="/facebook/connect" class="btn btn-common btn-xs m-r-1"><i class="fa fa-link"></i>Link Facebook Account</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="settings3" role="tabpanel">
+                                {% include "user/account_settings.html.twig" with {'form': settingsForm} %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                
+                <div class="col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body bg-danger text-center">
+                           <div class="radial-bar radial-bar-50 radial-bar radial-bar-danger m0">
+                                {% if 'http' in user.avatar %}
+                                    <img src="{{user.avatar}}" width="150px" height="150px" alt="" />
+                                {% else %}
+                                    <img src="assets/img/users/{{user.avatar}}" width="150px" height="150px" alt="" />
+                                {% endif %}
+                           </div>
+                           <p>
+                              <strong>40%</strong>
+                              <span>complete</span>
+                           </p>
+                        </div>
+                     </div>
+                </div>
+                -->
+            </div>
+    </div>
+{% endblock %}

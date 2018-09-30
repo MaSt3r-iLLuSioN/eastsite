@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+        <h5 class="mb-0">
+            <h3 data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              Carousel Slideshow Settings
+            </h3>
+        </h5>
+    </div>
+
+    <div id="collapseTwo" class="collapse in" role="tabPanel" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="maxnumber" class="">Maximum num of photos  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="What is the maximum ammount of images this carousel can display?"></i></label>
+                            {{form_widget(form.maxnumber)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

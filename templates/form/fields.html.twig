@@ -1,0 +1,90 @@
+{% block ckeditor %}
+    <textarea id="{{id}}" name="{{attr.name}}" class="{{attr.class}}">{{data|raw}}</textarea>
+{% endblock %}
+{% block jqueryuploader_widget %}
+    <div class="row fileupload-buttonbar">
+        <div class="col-lg-12">
+            <div class="row">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+                <div class="col-md-2">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Add file...</span>
+                        {{ block('form_widget_simple') }}
+                    </span>
+                </div>
+                <div class="col-md-10">
+                    <p>Allowed File Types: {% for type in fileTypes %}<strong>-{{type}}</strong> {% endfor %}</p>
+                </div>
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
+            </div>
+        </div>
+        <!-- The global progress state -->
+        <div class="col-lg-5 fileupload-progress fade">
+            <!-- The global progress bar -->
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+            </div>
+            <!-- The extended global progress state -->
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+    </div>
+    <!-- The table listing the files available for upload/download -->
+    <table role="presentation" class="table table-striped">
+        <tbody class="files">
+            {% if existingFiles is empty %}
+            {% else %}
+            {% for file in existingFiles %}
+                <tr class="template-download fade in">
+                    <td>
+                        <span class="preview">
+                            {% if file.type == 'jpg' or file.type == 'png' or file.type == 'gif' %}
+                                {% if hasPrettyPhoto == true %}
+                                    <a href="{{file.url}}" rel="prettyPhoto[pp_gal]"><img width="150px" hieght="150px" alt="{{file.description}}" src="{{file.url}}"></a>
+                                {% else %}
+                                    <img width="150px" hieght="150px" alt="{{file.description}}" src="{{file.url}}">
+                                {% endif %}
+                            {% elseif file.type == 'mp3' %}
+                                <img width="150px" hieght="150px" src="{{file.imageUrl}}">
+                            {% elseif file.type == 'mp4' %}
+                                <video width="320" height="240" controls><source src="{{file.url}}" type="video/mp4"></video>
+                            {% elseif file.type == 'pdf' %}
+                                <img width="150px" hieght="150px" src="/icons/pdf-icon.jpg">
+                            {% else %}
+                                <a href="{{file.url}}">Go to file.</a>
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <p class="name">
+                            <a data-gallery="">{{file.name}}</a>
+                            {% if file.type == 'mp3' %}
+                                <audio src="{{file.url}}" controls=""></audio>
+                            {% endif %}
+                        </p>
+                        <p>{{file.description}}</p>
+                        <input type="hidden" name="postfiles[]" value="{{file.id}}">
+                    </td>
+                    <td>
+                        <span class="size">
+                            {% if file.hasthumb == false %}
+                                <a class="btn btn-common generate{{file.id}}" data-url="/file/generate/{{file.id}}">
+                                    <i class="fa fa-trash"></i> Generate Thumbnail
+                                </a>
+                            {% else %}
+                                <img src="{{file.thumbnail}}" width="75px" />
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn-common delete" data-url="{{file.deleteUrl}}">
+                            <i class="fa fa-trash"></i> Delete {{file.deleteString}}
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    {% endif %}
+    </table>
+{% endblock %}

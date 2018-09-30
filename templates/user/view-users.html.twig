@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block title %}Site Users{% endblock %}
+{% block page_header %}Site Users{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Google Account</th>
+                        <th>Facebook Account</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="width:100%;">
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                {% if 'http' in user.avatar %}
+                                    <img src="{{user.avatar}}" width="100px" height="100px" alt="" />
+                                {% else %}
+                                    <img src="/assets/img/users/{{user.avatar}}" width="100px" height="100px" alt="" />
+                                {% endif %}
+                            </td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{% if user.googleset == true%}<i class="icon-check"></i>{% endif %}</td>
+                            <td>{% if user.facebookset == true%}<i class="icon-check"></i>{% endif %}</td>
+                            <td>
+                                {% for role in user.rolecollection %}
+                                    <p><strong>{{role.title}}</strong></p>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="btn btn-common btn-sm" href="/admin/users/{{user.id}}/roles">Roles</a>
+                                <a class="btn btn-common btn-sm" href="/admin/users/{{user.id}}/delete">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

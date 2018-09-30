@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title %}Add A Tab Group{% endblock %}
+{% block page_header %}Add A Tab Group{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('tabAddGroup') }}" method="post">
+        <div class="form-group">
+            <label for="title" class="sr-only">Title</label>
+            {{form_widget(form.title)}}
+        </div>
+
+        <button class="btn btn-common btn-lg disabled" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-envelope"></i> Save & Add Tabs</button>
+        <div id="msgSubmit" class="h3 text-center hidden"></div>
+        <div class="clearfix"></div>
+    </form>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+{% block title %}Site Blocks{% endblock %}
+{% block page_header %}Site Blocks{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="pull-right">
+                    <a href="/admin/blocks/add" class="btn btn-common btn-sm m-b-1 "><i class="fa fa-edit"></i>Add Block</a>
+                </div>
+                <div class="clearfix"></div>
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                    {% if disabledBlocks is empty %}
+                    {% else %}
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingDisabledBlocks">
+                                <h5>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseRegionDisabledBlocks" aria-expanded="false" aria-controls="collapseRegionDisabledBlocks">
+                                        Disabled Blocks
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseRegionDisabledBlocks" class="collapse" role="tabpanel" aria-labelledby="headingDisabledBlocks">
+                                <div class="card-block">
+                                    <div class="row">
+                                        {% for block in disabledBlocks %}
+                                            <div class="col-sm-4 p-a-1 m-b-1 m-t-1" style="border-top:1px solid #e1e1e1;border-right: 1px solid #e1e1e1;">
+                                                <h3><a href="/admin/blocks/{{block.id}}/view" alt="{{block.title}}">{{block.title}}</a></h3>
+                                                <p>Block Type: {{block.type.title}}
+                                                <br>Priority: {{block.priority}} 
+                                                <br>Css Class: {{block.cssclass}}
+                                                <br>Region(s): 
+                                                <ul>
+                                                {% for region in block.regions %}
+                                                    <li>{{region.title}}</li>
+                                                {% endfor %}
+                                                </ul>
+                                                </p>
+                                                <div class="col">
+                                                    <a href="/admin/blocks/{{block.id}}/edit" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Block</a>
+                                                    <a href="/admin/blocks/{{block.id}}/delete" class="btn btn-common btn-md m-r-1"><i class="fa fa-trash"></i>Delete Block</a>
+                                                </div>
+
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% for region in regions %}
+                        <div class="card">
+                            <div class="card-header" role="tab" id="heading{{region.id}}">
+                                <h5 class="mb-0">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseRegion{{region.id}}" aria-expanded="false" aria-controls="collapseRegion{{region.id}}">
+                                        {{region.title}}
+                                    </a>
+                                    
+                                </h5>
+                            </div>
+                            <div id="collapseRegion{{region.id}}" class="collapse" role="tabpanel" aria-labelledby="heading{{region.id}}">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {% if region.blocks is empty %}
+                                                <p>You havent added any blocks to this region yet!</p>
+                                            {% else %}
+                                                <p>These blocks will show in {{region.title}} based on there configuration.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        {% for block in region.blocks %}
+                                            <div class="col-sm-4 p-a-1 m-b-1 m-t-1" style="border-top:1px solid #e1e1e1;border-right: 1px solid #e1e1e1;">
+                                                <h3><a href="/admin/blocks/{{block.id}}/view" alt="{{block.title}}">{{block.title}}</a></h3>
+                                                <p>Block Type: {{block.type.title}}
+                                                <br>Priority: {{block.priority}} 
+                                                <br>Css Class: {{block.cssclass}}
+                                                <br>Region(s):</p> 
+                                                <ul>
+                                                {% for region in block.regions %}
+                                                    <li>{{region.title}}</li>
+                                                {% endfor %}
+                                                </ul>
+                                                <p>{% if block.onpage == true %}<strong>Show On Pages:</strong>{% else %}<strong>Show On All Pages Except:</strong>{% endif %}</p>  
+                                                <ul>
+                                                    {% for page in block.listedpagesarray %}
+                                                        {% if page != '' %}
+                                                            <li>{{page}}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                                <div class="col">
+                                                    <a href="/admin/blocks/{{block.id}}/edit" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Block</a>
+                                                    <a href="/admin/blocks/{{block.id}}/delete" class="btn btn-common btn-md m-r-1"><i class="fa fa-trash"></i>Delete Block</a>
+                                                </div>
+
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit Block {{block.title}}{% endblock %}
+{% block page_header %}Edit Block {{block.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('editBlock', {'block':block.id}) }}" method="post">
+
+
+        <div id="accordion"  role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                    <h5 class="mb-0">
+                        <h3 data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Block Settings
+                        </h3>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" role="tabPanel" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-block">
+                        <div class="container">
+                            <div class="form-row">
+                                <div class="col-md-8">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="title" class="">Block Title <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The Block Title will be displayed above the block."></i></label>
+                                            {{form_widget(form.title)}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="showtitle" class="">Show Title  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Should the block title be displayed when the block is rendered?"></i></label>
+                                            {{form_widget(form.showtitle)}}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="enabled" class="">Enabled  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Blocks will only be rendered to the page if it is enabled."></i></label>
+                                            {{form_widget(form.enabled)}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="priority" class="">List Priority  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="When blocks are rendered in each region, the ones with the lowest priority number gets rendered first."></i></label>
+                                            {{form_widget(form.priority)}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="region" class="">Layout Region  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The region is a certain part of the page design. Assign the block to a region to make it display there. Hold CTRL and click to select multiple."></i></label>
+                                    {{form_widget(form.region)}}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label for="onpage" class="">On Pages Or Off Pages  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="If 'On Listed Pages' is selected, blocks will only display on those pages and vise versa for 'All Pages Except Listed'"></i></label>
+                                    {{form_widget(form.onpage)}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="cssclass" class="">Css Class  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="Give the block container a css class for easy styling with css."></i></label>
+                                    {{form_widget(form.cssclass)}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="listedpages" class="">Listed Pages  <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="A list of page urls to display this block on or not. Seperate urls with a comma."></i></label>
+                                    {{form_widget(form.listedpages)}}
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+
+            {{ include('blocks/types/'~formtemplate~'.html.twig') }}
+
+        </div>
+
+
+
+
+
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Block</button>
+        <a href="/admin/blocks" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

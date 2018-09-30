@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block title %}All Site Category Groups{% endblock %}
+{% block page_header %}All Site Category Groups{% endblock %}
+{% block body %}
+    <div class="container">
+        <a href="/admin/category/add/group" class="btn btn-common btn-sm m-l-1 m-b-1 pull-right"><i class="fa fa-plus-square"></i>Add A Category Group</a>
+        {% if groups is empty %}
+            <p>You have created and Category Groups Yet!</p>
+        {% else %}
+            <div class="row">
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Group Name <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="The name of the Category Group."></i></th>
+                            <th>Category Count <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="The number of categories in the group."></i></th>
+                            <th>System <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Category Groups that have stystem to true are used by the system and cannot be edited or deleted."></i></th>
+                            <th>Actions <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="View, Edit, Delete, and Add buttons to make it managing easier. Will only show if you have the correct permissions."></i></th>
+                        </tr>
+                    </thead>
+                    <tbody style="width:100%;">
+                        {% for group in groups %}
+                            <tr>
+                                <td>{{group.title}}</td>
+                                <td>{{group.categorycount}}</td>
+                                <td>
+                                    {% if group.system == 1 %}
+                                    True
+                                    {% else %}
+                                    False
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="/admin/category/{{group.id}}" class="btn btn-common btn-sm m-r-1"><i class="fa fa-plus-square"></i>View</a>
+                                    {% if group.system == false %}
+                                        <a href="/admin/category/{{group.id}}/edit" class="btn btn-common btn-sm m-r-1"><i class="fa fa-plus-square"></i>Edit</a>
+                                        <a href="/admin/category/{{group.id}}/delete" class="btn btn-common btn-sm m-r-1"><i class="fa fa-plus-square"></i>Delete</a>
+                                    {% endif %}
+                                    <a href="/admin/category/{{group.id}}/add" class="btn btn-common btn-sm m-r-1"><i class="fa fa-plus-square"></i>Add Category</a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

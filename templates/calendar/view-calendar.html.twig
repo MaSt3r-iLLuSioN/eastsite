@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title %}Eastway Custom Homes Calendar{% endblock %}
+{% block page_header %}Eastway Custom Homes Calendar{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <iframe src="https://calendar.google.com/calendar/embed?{% for calendar in calendars %}&src={{calendar.googleid}}&ctz=America%2FIndiana%2FIndianapolis&color=%{{calendar.googlecolor}}{% endfor %}" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
+        <div class="col-md-12">
+            <h4>Want to set up a appointment?</h4>
+            <p>No problem, just contact us and we will get back with you!</p>
+            <a class="btn btn-common btn-md" href="/contact">Contact Us</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<article class="blog-post-wrapper wow fadeIn animated" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+    <header class="author-info row">
+        <h2 class="blog-post-title"><a href="/projects{{node.category.url ~ '/' ~ node.systemtitle}}">{{node.title}}</a></h2>
+    </header>
+    <hr>
+    <div class="row">
+        <section class="featured-wrapper col-md-6 m-b-1 p-l-2">
+            <div class="project_fotorama m-l-1 m-r-1">
+                {% for file in node.files %}
+                    {% if loop.first %}
+                        {% if file.type == 'png' or file.type == 'jpg' %}
+                            <a href="/projects{{node.category.url ~ '/' ~ node.systemtitle}}">
+                                <img src="{{asset(file.url)}}" alt="" style="width:75%;height: auto;">
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="tag-posted-in">
+            <ul class="list-unstyled">
+                <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa fa-calendar"  style="color:#fff;"></i> {{node.datetime|date('m-d-Y')}}</li>
+                <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-pencil-square-o"  style="color:#fff;"></i> <a  style="color:#fff;" href="/projects{{node.category.url}}">{{node.category.title}}</a></li>
+                {% if node.status == 1 %}
+                    <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-gavel" style="color:#fff;"></i> In Progress</li>
+                {% else %}
+                    <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-check" style="color:#fff;"></i>Completed</li>
+                {% endif %}
+            </ul>
+        </div>
+        <section class="blog-post-content">
+            <div class="blog-post">
+                <p>{{node.contentshort|raw}}</p>
+            </div>
+        </section>
+    </div>
+    <div class="blog-post-footer clearfix">
+
+        <ul class="post-meta pull-left">
+            <li>
+                {{likes[node.id]|raw}}
+            </li>
+            <!--
+            <li>
+                <span><a href="#"><i class="fa fa-share"></i> Share</a></span>
+            </li>
+            -->
+        </ul>
+        <a href="/projects{{node.category.url ~ '/' ~ node.systemtitle}}" class="pull-right btn btn-common btn-xs">Read more</a>
+    </div>
+</article>

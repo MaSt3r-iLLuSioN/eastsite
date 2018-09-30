@@ -1,0 +1,27 @@
+<div id="carousel-area">
+{% for file in block.blockclass.files %}
+    <div class="carousel-item">
+        <div class="container" style="text-align: center;">
+            <img height="auto" width="auto" alt="{{file.description}}" style="margin-left:auto;margin-right:auto;" src="{{file.url}}" />
+            <div class="carousel-caption">
+                <!--
+                <h2 class="fadeInUp wow animated" data-sppb-wow-delay="0.8s" style="color:#a62825;visibility: visible;">
+               {{file.content_title}}
+               </h2>
+                -->
+               <!--
+               <h3 class="fadeInUp wow animated" data-sppb-wow-delay="1.2s" style="visibility: visible;">
+               {{file.content_description}}
+               </h3>
+               -->
+               <a class="btn btn-lg btn-common fadeInUp wow animated" data-sppb-wow-delay="1.4s" href="/{{file.content_type}}{{file.content_url}}" style="visibility: visible;">
+               <i class="fa fa-eye">
+               </i>
+               View Project
+               </a>
+            </div>
+            
+        </div>
+    </div>
+{% endfor %}
+</div>

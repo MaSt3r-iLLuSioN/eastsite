@@ -1,0 +1,45 @@
+<li class="nav-item dropdown">
+    <a href="/account" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        Account
+    </a>
+    <div class="dropdown-menu" style="margin-top:12px;width:300px;">
+        {% if is_granted('ROLE_USER') %}
+            <div class="row mt-10">
+                <div class="col-lg-4">
+                    <p class="text-center mt-10" style="padding-left:5px;">
+                        {% if 'http' in app.user.avatar %}
+                            <img src="{{app.user.avatar}}" width="100px" height="100px" alt="" />
+                        {% elseif 'defualt' in app.user.avatar %}
+                            <img src="/assets/img/users/{{app.user.avatar}}" width="100px" height="100px" alt="" />
+                        {% else %}
+                            <img src="{{app.user.avatar}}" width="100px" height="100px" alt="" />
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-lg-8">
+                    <p class="text-left" style="color:#fff;"><strong>{{app.user.username}}</strong></p>
+                    <p class="text-left small" style="color:#fff;">{{app.user.email}}</p>
+                    <a href="/logout" onMouseOver="this.style.color='#a62825'" onMouseOut="this.style.color='#FFF'" class="btn btn-common m-r-1"><i class="fa fa-home"></i>Logout</a>
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="/account" onMouseOver="this.style.color='#a62825'" onMouseOut="this.style.color='#FFF'" class="btn btn-common m-r-1 m-t-1 m-l-1 m-b-1"><i class="fa fa-user"></i></i>My Profile</a>
+                    <!--
+                    <a href="/account/change-pass" class="btn btn-common m-r-1 m-l-1 m-t-1 m-b-1"><i class="fa fa-home"></i>Change Password</a>
+                    -->
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="/login" onMouseOver="this.style.color='#a62825'" onMouseOut="this.style.color='#FFF'"  class="btn btn-common btn-xs m-l-1 m-r-1 m-b-1 m-t-1"><i class="fa fa-user"></i></i>User Login</a>
+                    <a href="/register" onMouseOver="this.style.color='#a62825'" onMouseOut="this.style.color='#FFF'"  class="btn btn-common btn-xs m-l-1 m-r-1 m-b-1"><i class="fa fa-home"></i>User Registration</a>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+        <div id="jquery-clear" class="clearfix"></div>
+</li>

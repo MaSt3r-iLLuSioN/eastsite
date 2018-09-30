@@ -1,0 +1,54 @@
+<article class="blog-post-wrapper wow fadeIn animated" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+    <header class="author-info row">
+        <h2 class="blog-post-title"><a href="/blog{{node.category.url ~ '/' ~ node.systemtitle}}">{{node.title}}</a></h2>
+    </header>
+    <hr>
+    <div class="row">
+        <section class="featured-wrapper col-md-6 m-b-1 m-l-1">
+            <div class="blogcategory_fotorama">
+                {% for file in node.files %}
+                    {% if loop.first %}
+                        {% if file.type == 'png' or file.type == 'jpg' %}
+                            <a href="/blog{{node.category.url ~ '/' ~ node.systemtitle}}">
+                                <img src="{{asset(file.url)}}" alt="{{file.description}}" width="50%">
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="tag-posted-in">
+            <ul class="list-unstyled">
+                <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa fa-calendar" style="color:#fff;"></i> {{node.datetime|date('m/d/Y')}}</li>
+                <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-user" style="color:#fff;"></i>{{node.author.username}}</li>
+                <li style="color:#fff;background-color: #a62825;padding:5px;border:1px solid #f7da77;border-radius: 5px;"><i class="fa fa-pencil-square-o" style="color:#fff;"></i> <a style="color:#fff;" href="/blog{{node.category.url}}">{{node.category.title}}</a></li>
+            </ul>
+        </div>
+
+        <section class="blog-post-content">
+            <div class="blog-post">
+                <p>{{node.contentshort|raw}}</p>
+            </div>
+        </section>
+    </div>
+    <div class="blog-post-footer clearfix">
+
+        <ul class="post-meta pull-left">
+            <!--
+            <li>
+                <span><a href="#"><i class="fa fa-comments"></i> {{node.commentcount}}</a></span>
+            </li>
+            -->
+            <li>
+                {{likes[node.id]|raw}}
+            </li>
+            <!--
+            <li>
+                <span><a href="#"><i class="fa fa-share"></i> Share</a></span>
+            </li>
+            -->
+        </ul>
+        <a href="/blog{{node.category.url ~ '/' ~ node.systemtitle}}" class="pull-right btn btn-common btn-xs">Read more</a>
+    </div>
+</article>

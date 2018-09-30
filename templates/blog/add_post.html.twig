@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Blog Post{% endblock %}
+{% block page_header %}Add Blog Post{% endblock %}
+{% block body %}
+    <form class="shake" enctype="multipart/form-data" action="{{ path('addBlogPost') }}" method="post">
+        <fieldset>
+            <legend>Basic Settings</legend>
+            <div class="form-group">
+                <label for="title" class="">Post Title:</label>
+                {{form_widget(form.title)}}
+            </div>
+            <div class="form-group">
+                <label for="content" class="">Post Content:</label>
+                {{form_widget(form.content)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Meta Settings</legend>
+            <div class="form-group">
+                <label for="metakeywords" class="">Meta Keywords:</label>
+                {{form_widget(form.metakeywords)}}
+            </div>
+            <div class="form-group">
+                <label for="metadescription" class="">Meta Description:</label>
+                {{form_widget(form.metadescription)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Category Settings</legend>
+            <div class="form-group">
+                <label for="category" class="">Post Category:</label>
+                {{form_widget(form.category)}}
+            </div>
+        </fieldset>
+            
+        <fieldset>
+            <legend>Post Files</legend>
+            {{form_widget(form.postfile)}}
+        </fieldset>
+
+        {{form_widget(form.submit)}}
+        <a href="/admin/blog" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

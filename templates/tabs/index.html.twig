@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}Tab Groups{% endblock %}
+{% block page_header %}Tab Groups{% endblock %}
+{% block body %}
+        <div class="container">
+            <div class="row">
+                <h3>All Tab Groups</h3>
+            </div>
+            <div class="row">
+                <a href="/admin/tabs/add-group" class="btn btn-common btn-md m-r-1"><i class="fa fa-plus-square"></i>Add A TabGroup</a>
+            </div>
+            <div class='row'>
+                {% for tabGroup in tabGroups %}
+                    <div class='col-md-4 pull-left mt-10 m-l-0' style="border:1px solid #e1e1e1; padding:15px;">
+                        <h3><a href="/admin/tabs/{{tabGroup.id}}">{{tabGroup.title}}</a></h3>
+                        <a href="/admin/tabs/{{tabGroup.id}}/edit" class="btn btn-common btn-md m-r-1"><i class="fa fa-edit"></i>Edit Group</a>
+                        <a href="/admin/tabs/{{tabGroup.id}}/delete" class="btn btn-common btn-md m-r-1"><i class="fa fa-trash"></i>Delete Group</a>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+{% endblock %}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124264387-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124264387-1');
+    </script>
+
+    <link rel="shortcut icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('assets/img/favicon2.ico')}}" type="image/x-icon">
+    <meta http-equiv="Expires" content="1">
+    <meta charset="utf-8">
+    {% block metakeywords %}{% endblock %}
+    
+    <!-- Viewport Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | Eastway Custom Homes</title>
+    {% block stylesheets %}
+        <link rel="preload" href="{{ asset('assets/libraries/jqueryui/jquery-ui.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="{{ asset('build/app.css') }}"></noscript>
+        <link rel="preload" href="{{ asset('build/app.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="{{ asset('build/app.css') }}"></noscript>
+    {% endblock %}
+    
+  </head>
+    <body {% if is_granted('ROLE_ADMIN') %}style="margin-bottom: 100px;"{% endif %}>
+        {% if is_granted('ROLE_ADMIN') %}
+            <!-- admin toolbar goes here -->
+            {{ include('layout/admin-navbar.html.twig') }}
+        {% endif %}
+        <!-- Header area wrapper starts -->
+        <header id="header-wrap">
+          <!-- Roof area starts -->
+          <!-- Roof area Ends -->
+          <!-- Header area starts -->
+          <section id="header">
+            {% block header %}  
+                {{ include('layout/navbar.html.twig') }}
+            {% endblock %}
+          </section>
+        </header>
+            
+        <section class="classic-blog-section section">
+            
+                <div class="row">
+                    {% for block in content_top_blocks %}
+                        {% if block.enabled == true %}
+                            {{ include('blocks/block-container.html.twig') }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="page-header-section">
+                    <div class="page-header-area">
+                        <div class="page-header-content">
+                            <h2 class="text-center">{% block page_header %}{% endblock %}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="margin-top:10px;">
+                    {% if (left_sidebar_on == true) or (both_sidebars_on == true) %}
+                        <div class="col-md-3">
+                            <div class="sidebar-area">
+                                {% for block in left_sidebar_blocks %}
+                                    {% if block.enabled == true %}
+                                        {{ include('blocks/block-container.html.twig') }}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-{{layout_content_size}}">
+                        <div class="row">
+                            {{ include('layout/breadcrumbs.html.twig') }}
+                        </div>
+                            <div class="row">
+                                {% for label, messages in app.flashes %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{label}} alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% for block in content_blocks %}
+                            {% if block.enabled == true %}
+                                {{ include('blocks/block-container.html.twig') }}
+                            {% endif %}
+                        {% endfor %}
+                        {% block body %}{% endblock %}
+                    </div>
+                    {% if (right_sidebar_on == true) or (both_sidebars_on == true) %}
+                        <div class="col-md-3">
+                            <div class="sidebar-area">
+                                {% for block in right_sidebar_blocks %}
+                                    {% if block.enabled == true %}
+                                        {{ include('blocks/block-container.html.twig') }}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% for block in content_bottom_blocks %}
+                        {% if block.enabled == true %}
+                            {{ include('blocks/block-container.html.twig') }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </section>
+        
+        <!-- Footer Section -->
+        <footer>
+            {% block footer %}
+                {{ include('layout/footer.html.twig') }}
+            {% endblock %}
+        </footer>
+        <a href="#" class="back-to-top" style="display: none;">
+            <i class="fa fa-angle-up">
+            </i>
+        </a>
+        <!-- Footer Section End-->
+        {% block javascripts %}
+            <!-- JavaScript & jQuery Plugins -->
+            <!-- jQuery Load -->
+            <script src="{{ asset('assets/js/jquery-min.js') }}"></script>
+            <script src="{{ asset('assets/libraries/jqueryui/jquery-ui.min.js') }}"></script>
+            <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+            <script src="{{ asset('assets/js/cssrelpreload.js')}}"></script>
+            <!-- Bootstrap JS -->
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <!--Text Rotator-->
+            <script src="{{ asset('assets/js/jquery.mixitup.js') }}"></script>
+            <!--WOW Scroll Spy-->
+            <script src="{{ asset('assets/js/wow.js') }}"></script>
+            <!-- OWL Carousel -->
+            <script src="{{ asset('assets/js/owl.carousel.js') }}"></script>
+
+            <!-- WayPoint -->
+            <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
+            <!-- CounterUp -->
+            <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
+            <!-- ScrollTop -->
+            <script src="{{ asset('assets/js/scroll-top.js') }}"></script>
+            <!-- Appear -->
+            <script src="{{ asset('assets/js/jquery.appear.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.vide.js') }}"></script>
+            <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5aca5e45aa671e0013a458db&product=inline-share-buttons"></script>
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!--[if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+                </script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+                </script>
+            <![endif]-->
+             <!-- All JS plugin Triggers -->
+            <script src="{{ asset('assets/js/main.js') }}"></script>
+            
+        {% endblock %}
+    </body>
+</html>

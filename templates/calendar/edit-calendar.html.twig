@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit Calendar: {{calendar.title}}{% endblock %}
+{% block page_header %}Edit Calendar: {{calendar.title}}{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('editCalendar', {'calendar':calendar.id}) }}" method="post">
+        <div class="form-group">
+            <label for="title" class="">Calendar Title</label>
+            {{form_widget(form.title)}}
+        </div>
+        <div class="form-group">
+            <label for="description" class="">Calendar Description</label>
+            {{form_widget(form.description)}}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="color" class="">Calendar Color <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="The color this calendar will be on the calendar page."></i></label>
+                {{form_widget(form.color)}}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="public" class="">Public <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="If public, this calendar will show to all site users registered and anonymous."></i></label>
+                {{form_widget(form.public)}}
+            </div>
+        </div>
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Calendar</button>
+        <a href="/admin/calendar" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

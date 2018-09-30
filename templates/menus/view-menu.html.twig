@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}Menu: {{menu.title}}{% endblock %}
+{% block page_header %}Menu: {{menu.title}}{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-3 pull-right">
+            <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/addItem">Add Menu Item</a>
+            {% if menu.id != 6 and menu.id != 7 %}
+                <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/edit">Edit Menu</a>
+                <a class="btn btn-common btn-sm" href="/admin/menus/{{menu.id}}/delete">Delete Menu</a>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    {% for item in menu.items %}
+                        <li>{{item.title}} <a class="btn btn-common btn-sm m-b-1" href="/admin/menus/{{menu.id}}/{{item.id}}/edit">Edit</a>{% if item.system == false %}<a class="btn btn-common btn-sm m-b-1" href="/admin/menus/{{menu.id}}/{{item.id}}/delete">Delete</a>{% endif %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

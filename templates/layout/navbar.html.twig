@@ -1,0 +1,53 @@
+{% import "layout/navbar-macro.html.twig" as navMacro %}
+<!-- Navbar Starts -->
+<nav class="navbar navbar-light navbar-static-top navbar-fixed-top" style="background-color:#a62825;border-bottom: 1px solid #f7da77;">
+    <div class="container">
+        <div class="row mobile-fix">
+        <!-- Brand -->
+            <a class="navbar-brand col text-center pull-left" style="padding-top:0px;height:50px;position: relative;" href="/">
+                <img class="site-logo" style="background-color:#fff;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-right: 1px solid #a62825;border-left: 1px solid #a62825; border-bottom: 1px solid #a62825;" src="{{ asset('assets/img/logo/' ~ config.logo) }}" width="180" height="90" alt="Eastway Homes">
+            </a>
+            
+            <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse' type='button'>☰</button>
+            <div class="collapse navbar-toggleable-sm pull-md-right" id="main-menu">
+                <!-- Navbar Starts -->
+                <ul class="nav nav-inline">
+                    {% for menu in siteMenu %}
+                        {% if menu.childrencount > 0 %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link {% if CurrentURI == menu.url %}active{% endif %}" href="{{menu.url}}" role="button" aria-haspopup="true" aria-expanded="false">{{menu.title}} <i class="fa fa-caret-down"></i></a>                  
+                                <ul class="dropdown-menu"> 
+                                    {{navMacro.navbarMacro(menu, false, false)}}
+                                </ul>
+                            </li>
+                        {% elseif menu.hascategory == true %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link {% if CurrentURI == menu.url %}active{% endif %}" href="{{menu.url}}" role="button" aria-haspopup="true" aria-expanded="false">{{menu.title}} <i class="fa fa-caret-down"></i></a>                  
+                                <ul class="dropdown-menu"> 
+                                    {{navMacro.navbarMacro(menu, true, true)}}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if CurrentURI == menu.url %}active{% endif %}" href="{{menu.url}}" role="button">{{menu.title}}</a>                  
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {{ include('blocks/account-menu.html.twig') }}
+                    <!-- Search in right of nav -->
+                    <li class="nav-item" >
+                        <a class="nav-link" href="https://www.facebook.com/eastwaycustomhomes/"><i class="fa fa-facebook-square"></i> Eastway</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" href="https://www.facebook.com/UBuildItIndy/"><i class="fa fa-facebook-square"></i> UbuildIt</a>
+                    </li>
+                    
+                    <!-- Search Ends -->                  
+                </ul>  
+            </div>
+
+        </div>
+    </div>
+</nav>
+<!-- Navbar Ends -->

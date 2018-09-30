@@ -1,0 +1,114 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    google_app_name: 'Eastway'
+    google_client_id: '222992072234-qse4m20idj3chaeq4r80ng5avelfmtdq.apps.googleusercontent.com'
+    google_client_secret: 'rn5b893cZnhB4T1PtyR32L26'
+    facebook_client_id: '513216889078263'
+    facebook_client_secret: '30d4ef1287fa4fde9335a8013fca4211'
+    upload_directory: '%kernel.project_dir%/public/uploads'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Form,Migrations,Tests,Kernel.php}'
+    
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\FileUploader:
+        arguments:
+            $targetDir: '%upload_directory%'
+            
+    app.prettyPhoto:
+        alias: App\Service\PrettyPhoto
+        public: true
+    
+    Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'
+        
+    App\Controller\BaseController:
+        arguments:
+            - profiler
+        
+    snc_second_level_cache:
+        class: '%snc_redis.doctrine_cache_phpredis.class%'
+        arguments:
+            - '@snc_redis.default'
+    
+    app.fileUtility:
+        alias: App\Service\FileUploaderUtility
+        public: true
+        
+    app.fotorama:
+        alias: App\Service\Fotorama
+        public: true
+    
+    app.googlemapper:
+        alias: App\Service\GoogleMapper
+        public: true
+        
+    app.heremapper:
+        alias: App\Service\HereMapper
+        public: true
+    app.security.login_form_authenticator:
+        class: App\Security\LoginFormAuthenticator
+        autowire: true
+        
+    google_authenticator:
+        class: App\Security\GoogleAuthenticator
+        autowire: true
+        
+    facebook_authenticator:
+        class: App\Security\FacebookAuthenticator
+        autowire: true
+            
+    App\EventListener\ControllerListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+        autowire: true
+
+    App\Form\Type\CKEditorType:
+        class: App\Form\Type\CKEditorType
+        tags: [form.type]
+        autowire: false
+        autoconfigure: false
+        arguments:
+            - '@twig'
+            - '@event_dispatcher'
+knpu_oauth2_client:
+    clients:
+        google:
+            type: google
+            client_id: "%google_client_id%"
+            client_secret: "%google_client_secret%"
+            redirect_route: google_connect_check
+            redirect_params: {}
+        facebook:
+            # must be "facebook" - it activates that type!
+            type: facebook
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: "%facebook_client_id%"
+            client_secret: "%facebook_client_secret%"
+            # a route name you'll create
+            redirect_route: facebook_connect_check
+            redirect_params: {}
+            graph_api_version: v2.8
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+            

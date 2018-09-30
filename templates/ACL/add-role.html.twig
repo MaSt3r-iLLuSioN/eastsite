@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block title %}Add Role{% endblock %}
+{% block page_header %}Add Role{% endblock %}
+{% block body %}
+    <form class="shake" action="{{ path('addRole') }}" method="post">
+        <div class="form-group">
+            <label for="title" class="sr-only">Role Title:</label>
+            {{form_widget(form.title)}}
+        </div>
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Role</button>
+        <a href="/admin/roles" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
+{% endblock %}

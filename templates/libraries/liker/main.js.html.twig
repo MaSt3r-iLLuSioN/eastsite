@@ -1,0 +1,61 @@
+<script type="text/javascript">
+    $(document).ready(function(e){
+        $("#like_node_{{node.id}}").on('click', function(e){
+            e.preventDefault();
+            {% if uid != 0 %}
+                var thisinstance = this;
+                $.ajax({
+                    dataType: "json",
+                    url: "/like/{{uid}}/{{node.id}}/{{node.type}}", 
+                    success: function(data){
+                        $(thisinstance).children('.fa-thumbs-down, .fa-thumbs-up').toggleClass("fa-thumbs-down fa-thumbs-up");
+                        $(thisinstance).children('.text').text(data.text);
+                        $(thisinstance).children('.badge-success').text(data.count);
+                    },
+                    error: function(data){
+                        alert('error');
+                    }
+                });
+            {% else %}
+                var header = "You are not logged in";
+                var content = 'Please login or register to like "{{node.title}}". All content you like will be listed on you\'re profile page for easy access.';
+
+                doModal('modal_{{node.id}}', header, content);
+                $('#modal_{{node.id}}').appendTo("body").modal('show');
+            {% endif %}
+        });
+    })
+   
+    function doModal(placementId, heading, formContent)
+    {
+        var html =  '<div id="modalWindow" role="dialog" class="modal hide">';
+        html += '<div class="modal-dialog" role="document">';
+        html += '<div class="modal-content">';
+        html += '<div class="modal-header">';
+        html += '<div class="col-md-11"><h5 class="modal-title"><i class="fa fa-exclamation-triangle" style="color:#FFFF00;"></i> '+heading+'</h5></div>';
+        html += '<button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';      
+        html += '</div>';
+        html += '<div class="modal-body">';
+        html += '<p>';
+        html += formContent;
+        html += '</div>';
+        html += '<div class="modal-footer">';
+        html += '<a href="/login" class="m-r-1"><button type="button" class="btn btn-common">Login</button></a>';
+        html += '<a href="/register" class="m-r-1"><button type="button" class="btn btn-common">Register</button></a>';
+        html += '<button type="button" class="btn btn-common" data-dismiss="modal">Close</button>';
+        html += '</div>';  // footer
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';  // modalWindow
+        $("#"+placementId).html(html);
+        $("#modalWindow").modal();
+    }
+
+
+    function hideModal()
+    {
+        // Using a very general selector - this is because $('#modalDiv').hide
+        // will remove the modal window but not the mask
+        $('.modal.in').modal('hide');
+    }
+</script>

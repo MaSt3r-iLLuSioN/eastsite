@@ -1,0 +1,292 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+      <div class="row main-row">
+        <!-- Left Column -->
+        <div class="col-xs-3 sidebar">
+          <!-- Main Navigation -->
+          <ul class="nav nav-sidebar">
+            <li id="floorplan_tab"><a href="#">
+              Edit Floorplan
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+            <li id="design_tab"><a href="#">
+              Design
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+            <li id="items_tab"><a href="#">
+              Add Items
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+          </ul>
+          <hr />
+
+            <!-- Context Menu -->
+            <div id="context-menu">
+                <div style="margin: 0 20px">
+                  <span id="context-menu-name" class="lead"></span>
+                  <br /><br />
+                  <button class="btn btn-block btn-danger" id="context-menu-delete">
+                    <span class="glyphicon glyphicon-trash"></span> 
+                    Delete Item
+                  </button>
+                <br />
+                <div class="panel panel-default">
+                  <div class="panel-heading">Adjust Size</div>
+                  <div class="panel-body" style="color: #333333">
+
+                    <div class="form form-horizontal" class="lead">
+                      <div class="form-group">
+                        <label class="col-sm-5 control-label">
+                           Width
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="number" class="form-control" id="item-width">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-5 control-label">
+                          Depth 
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="number" class="form-control" id="item-depth">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-5 control-label">
+                          Height
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="number" class="form-control" id="item-height">
+                        </div>
+                      </div>
+                    </div>
+                    <small><span class="text-muted">Measurements in inches.</span></small>
+                  </div>
+                </div>
+
+                <label><input type="checkbox" id="fixed" /> Lock in place</label>
+                <br /><br />
+                </div>
+              </div>
+
+            <!-- Floor textures -->
+            <!-- Modal -->
+            <div class="modal designerModel" id="floorTextureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title pull-left" id="exampleModalLabel">Choose A Floor Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="container-fluid">
+                          <div class="tabs-x align-center tabs-left tab-bordered">
+                            <ul class="nav nav-tabs p-b-1" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="hardwood-tab" data-toggle="tab" href="#hardwood_tab" role="tab" aria-controls="hardwood_tab" aria-selected="true">Hardwood</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="laminate-tab" data-toggle="tab" href="#laminate_tab" role="tab" aria-controls="laminate_tab" aria-selected="false">Laminate</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="carpet-tab" data-toggle="tab" href="#carpet_tab" role="tab" aria-controls="carpet_tab" aria-selected="false">Carpet</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="ceramic_tile-tab" data-toggle="tab" href="#ceramic_tile_tab" role="tab" aria-controls="ceramic_tile_tab" aria-selected="false">Ceramic Tile</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="tile-tab" data-toggle="tab" href="#tile_tab" role="tab" aria-controls="tile_tab" aria-selected="false">Tile</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane show active" id="hardwood_tab" role="tabpanel" aria-labelledby="hardwood-tab">
+                                    <div class="container-fluid">
+                                        <div class="col-sm-6" style="padding: 3px">
+                                          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
+                                            <img width="150" height="150" alt="Thumbnail light fine wood" src="assets/rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
+                                          </a>
+                                        </div>
+                                          <div class="col-sm-6" style="padding: 3px">
+                                          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/hardwood.png" texture-stretch="false" texture-scale="300">
+                                            <img width="150" height="150"  alt="Thumbnail hardwood" src="assets/rooms/textures/hardwood.png" />
+                                          </a>
+                                        </div>
+                                    </div>
+                                </div>
+                              <div class="tab-pane fade" id="laminate_tab" role="tabpanel" aria-labelledby="laminate-tab">...</div>
+                              <div class="tab-pane fade" id="carpet_tab" role="tabpanel" aria-labelledby="carpet-tab">...</div>
+                              <div class="tab-pane fade" id="ceramic_tile_tab" role="tabpanel" aria-labelledby="ceramic_tile-tab">...</div>
+                              <div class="tab-pane fade" id="tile_tab" role="tabpanel" aria-labelledby="tile-tab">...</div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wall Textures -->
+            <div class="modal designerModel" id="wallTextureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title pull-left" id="exampleModalLabel">Choose A Wall Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="container-fluid">
+                          <div class="tabs-x align-center tabs-left tab-bordered">
+                            <ul class="nav nav-tabs p-b-1" id="myTab" role="tablist">
+                                {% for category in wallTextures %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {%if loop.index==1%}active{%endif%}" id="{{category.title}}-tab" data-toggle="tab" href="#{{category.title}}_tab" role="tab" aria-controls="{{category.title}}_tab" aria-selected="{%if loop.index == 1%}true{% else %}false{%endif%}">{{category.title}}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="tab-content" id="myTabContent" style="height:auto;min-height: 150px;">
+                                {% for node in wallTextures %}
+                                    <div class="tab-pane{% if loop.index == 1%} show active{%endif%}" id="{{node.title}}_tab" role="tabpanel" aria-labelledby="{{node.title}}-tab">
+                                        <div class="container-fluid">
+                                            {% if node.texture %}
+                                                {% for texture in node.textures %}
+                                                    <div class="col-sm-6" style="padding: 3px">
+                                                        <a href="#" class="thumbnail texture-select-thumbnail" texture-url="{{texture.url}}" texture-stretch="{{texture.stretch}}" texture-scale="{{texture.scale}}">
+                                                          <img width="150" height="150" alt="{{texture.title}}" src="{{texture.url}}" />
+                                                        </a>
+                                                      </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          
+          
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-xs-9 main">
+
+            <!-- 3D Viewer -->
+            <div id="viewer">
+
+                <div id="main-controls">
+                    <div class="btn-group">
+                        <button id="new" type="button" class="btn btn-default"><i class="fa fa-sticky-note fa-2x"></i></button>
+                        <button id="save" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
+                        <button id="load" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
+                        <button id="toggleSpin" type="button" class="btn btn-default"><i class="fa fa fa-refresh fa-2x"></i></button>
+                    </div>
+                    <a href="#" class="btn btn-default btn-sm"  style="color:#f7da77;" id="new">
+                        <i class="fa fa-sticky-note"></i> New
+                    </a>
+                    <a href="#" class="btn btn-default btn-sm" style="color:#f7da77;" id="saveFile">
+                      Save Plan
+                    </a>
+                    <a class="btn btn-sm btn-default btn-file" style="color:#f7da77;">
+                     <input type="file" class="hidden-input" id="loadFile">
+                     Load Plan
+                    </a>
+                </div>
+
+                <div id="camera-controls">
+                  <a href="#" class="btn btn-default bottom" style="color:#f7da77;padding:1px;" id="reset-view">
+                    <i class="fa fa-home fa-4x"></i>
+                  </a>
+
+                  <span>&nbsp;</span>
+
+                  <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-left">
+                    <i class="fa fa-arrow-left fa-4x"></i>
+                  </a>
+                  <span class="btn-group-vertical">
+                    <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-up">
+                      <i class="fa fa-arrow-up fa-4x"></i>
+                    </a>
+                    <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-down">
+                      <i class="fa fa-arrow-down fa-4x"></i>
+                    </a>
+                  </span>
+                  <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-right">
+                    <i class="fa fa-arrow-right fa-4x"></i>
+                  </a>
+                </div>
+
+                <div id="loading-modal">
+                  <h1>Loading...</h1>  
+                </div>
+            </div>
+
+          <!-- 2D Floorplanner -->
+          <div id="floorplanner">
+            
+            <div id="floorplanner-controls">
+                <div class="btn-group">
+                    <button id="move" type="button" class="btn btn-default"><i class="fa fa-arrows-alt fa-2x"></i></button>
+                    <button id="draw" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
+                    <button id="delete" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
+                    <button id="text" type="button" class="btn btn-default"><i class="fa fa fa-font fa-2x"></i></button>
+                    <button id="select" type="button" class="btn btn-default"><i class="fa fa-hand-o-up fa-2x"></i></button>
+                </div>
+               
+                <span class="pull-right">
+                  <button class="btn btn-primary btn-sm" id="update-floorplan">Done &raquo;</button>
+                </span>
+
+            </div>
+                <canvas id="floorplanner-canvas" style="width:auto;height: 800px;"></canvas>
+                <div id="draw-walls-hint">
+                  Press the "Esc" key to stop drawing walls
+                </div>
+          </div>
+
+          <!-- Add Items -->
+          <div id="add-items">
+                <div class="row" id="items-wrapper">
+
+                  <!-- Items added here by items.js -->
+                </div>
+          </div>
+      
+        </div>
+        <!-- End Right Column -->
+      </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/libraries/blueprint3d/js/three.min.js') }}"></script>
+    <script src="{{ asset('assets/libraries/blueprint3d/src/blueprint3d.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('assets/libraries/tabs-x/js/bootstrap-tabs-x.js') }}"></script>
+    <script src="{{ asset('assets/libraries/blueprint3d/js/items.js') }}"></script>
+    <script src="{{ asset('assets/libraries/blueprint3d/js/main.js') }}"></script>
+    
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="preload" href="{{asset('assets/libraries/blueprint3d/css/main.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="{{ asset('assets/libraries/blueprint3d/css/main.css') }}"></noscript>
+    <link rel="preload" href="{{asset('assets/libraries/tabs-x/css/bootstrap-tabs-x.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="{{ asset('assets/libraries/blueprint3d/css/main.css') }}"></noscript>
+{% endblock %}
