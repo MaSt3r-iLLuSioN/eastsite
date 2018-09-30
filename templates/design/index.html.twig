@@ -4,25 +4,22 @@
 
 {% block body %}
 <div class="container-fluid">
-      <div class="row main-row">
+    <div class="row main-row">
         <!-- Left Column -->
         <div class="col-xs-3 sidebar">
-          <!-- Main Navigation -->
-          <ul class="nav nav-sidebar">
-            <li id="floorplan_tab"><a href="#">
-              Edit Floorplan
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-            <li id="design_tab"><a href="#">
-              Design
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-            <li id="items_tab"><a href="#">
-              Add Items
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-          </ul>
-          <hr />
+            <!-- Main Navigation -->
+            <ul class="nav nav-sidebar">
+                <li id="floorplan_tab">
+                    <a href="#">Edit Floorplan <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                </li>
+                <li id="design_tab">
+                    <a href="#">Design <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                </li>
+                <li id="items_tab">
+                    <a href="#">Add Items <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                </li>
+            </ul>
+            <hr />
 
             <!-- Context Menu -->
             <div id="context-menu">
@@ -182,92 +179,99 @@
               </div>
             </div>
           
-          
         </div>
 
+                                
         <!-- Right Column -->
         <div class="col-xs-9 main">
+            <div id="designer_wrapper">
+                <style>
+                    #designer_wrapper {
+                        background-color: #ffffff;
+                    }
+                </style>
+                <a id="fullscreen_btn" href="#" class="btn btn-primary" style="position:relative;top:80px;left:10px;"><i class="fa fa-arrows-alt"></i></a>
+                <!-- 3D Viewer -->
+                <div id="viewer">
 
-            <!-- 3D Viewer -->
-            <div id="viewer">
-
-                <div id="main-controls">
-                    <div class="btn-group">
-                        <button id="new" type="button" class="btn btn-default"><i class="fa fa-sticky-note fa-2x"></i></button>
-                        <button id="save" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
-                        <button id="load" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
-                        <button id="toggleSpin" type="button" class="btn btn-default"><i class="fa fa fa-refresh fa-2x"></i></button>
+                    <div id="main-controls">
+                        <div class="btn-group">
+                            <button id="new" type="button" class="btn btn-default"><i class="fa fa-sticky-note fa-2x"></i></button>
+                            <button id="save" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
+                            <button id="load" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
+                            <button id="toggleSpin" type="button" class="btn btn-default"><i class="fa fa fa-refresh fa-2x"></i></button>
+                        </div>
+                        <a href="#" class="btn btn-default btn-sm"  style="color:#f7da77;" id="new">
+                            <i class="fa fa-sticky-note"></i> New
+                        </a>
+                        <a href="#" class="btn btn-default btn-sm" style="color:#f7da77;" id="saveFile">
+                          Save Plan
+                        </a>
+                        <a class="btn btn-sm btn-default btn-file" style="color:#f7da77;">
+                         <input type="file" class="hidden-input" id="loadFile">
+                         Load Plan
+                        </a>
                     </div>
-                    <a href="#" class="btn btn-default btn-sm"  style="color:#f7da77;" id="new">
-                        <i class="fa fa-sticky-note"></i> New
-                    </a>
-                    <a href="#" class="btn btn-default btn-sm" style="color:#f7da77;" id="saveFile">
-                      Save Plan
-                    </a>
-                    <a class="btn btn-sm btn-default btn-file" style="color:#f7da77;">
-                     <input type="file" class="hidden-input" id="loadFile">
-                     Load Plan
-                    </a>
+
+                    <div id="camera-controls">
+                      <a href="#" class="btn btn-default bottom" style="color:#f7da77;padding:1px;" id="reset-view">
+                        <i class="fa fa-home fa-4x"></i>
+                      </a>
+
+                      <span>&nbsp;</span>
+
+                      <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-left">
+                        <i class="fa fa-arrow-left fa-4x"></i>
+                      </a>
+                      <span class="btn-group-vertical">
+                        <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-up">
+                          <i class="fa fa-arrow-up fa-4x"></i>
+                        </a>
+                        <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-down">
+                          <i class="fa fa-arrow-down fa-4x"></i>
+                        </a>
+                      </span>
+                      <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-right">
+                        <i class="fa fa-arrow-right fa-4x"></i>
+                      </a>
+                    </div>
+
+                    <div id="loading-modal">
+                      <h1>Loading...</h1>  
+                    </div>
                 </div>
 
-                <div id="camera-controls">
-                  <a href="#" class="btn btn-default bottom" style="color:#f7da77;padding:1px;" id="reset-view">
-                    <i class="fa fa-home fa-4x"></i>
-                  </a>
+                <!-- 2D Floorplanner -->
+                <div id="floorplanner">
 
-                  <span>&nbsp;</span>
+                    <div id="floorplanner-controls">
+                        <div class="btn-group">
+                            <button id="move" type="button" class="btn btn-default"><i class="fa fa-arrows-alt fa-2x"></i></button>
+                            <button id="draw" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
+                            <button id="delete" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
+                            <button id="text" type="button" class="btn btn-default"><i class="fa fa fa-font fa-2x"></i></button>
+                            <button id="select" type="button" class="btn btn-default"><i class="fa fa-hand-o-up fa-2x"></i></button>
+                        </div>
 
-                  <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-left">
-                    <i class="fa fa-arrow-left fa-4x"></i>
-                  </a>
-                  <span class="btn-group-vertical">
-                    <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-up">
-                      <i class="fa fa-arrow-up fa-4x"></i>
-                    </a>
-                    <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-down">
-                      <i class="fa fa-arrow-down fa-4x"></i>
-                    </a>
-                  </span>
-                  <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-right">
-                    <i class="fa fa-arrow-right fa-4x"></i>
-                  </a>
-                </div>
+                        <span class="pull-right">
+                          <button class="btn btn-primary btn-sm" id="update-floorplan">Done &raquo;</button>
+                        </span>
 
-                <div id="loading-modal">
-                  <h1>Loading...</h1>  
-                </div>
-            </div>
-
-          <!-- 2D Floorplanner -->
-          <div id="floorplanner">
-            
-            <div id="floorplanner-controls">
-                <div class="btn-group">
-                    <button id="move" type="button" class="btn btn-default"><i class="fa fa-arrows-alt fa-2x"></i></button>
-                    <button id="draw" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
-                    <button id="delete" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
-                    <button id="text" type="button" class="btn btn-default"><i class="fa fa fa-font fa-2x"></i></button>
-                    <button id="select" type="button" class="btn btn-default"><i class="fa fa-hand-o-up fa-2x"></i></button>
-                </div>
-               
-                <span class="pull-right">
-                  <button class="btn btn-primary btn-sm" id="update-floorplan">Done &raquo;</button>
-                </span>
-
-            </div>
+                    </div>
                 <canvas id="floorplanner-canvas" style="width:auto;height: 800px;"></canvas>
                 <div id="draw-walls-hint">
                   Press the "Esc" key to stop drawing walls
                 </div>
-          </div>
+            </div>
 
-          <!-- Add Items -->
-          <div id="add-items">
-                <div class="row" id="items-wrapper">
+            <!-- Add Items -->
+            <div id="add-items">
+                  <div class="row" id="items-wrapper">
 
-                  <!-- Items added here by items.js -->
-                </div>
-          </div>
+                    <!-- Items added here by items.js -->
+                  </div>
+            </div>
+        </div>
       
         </div>
         <!-- End Right Column -->

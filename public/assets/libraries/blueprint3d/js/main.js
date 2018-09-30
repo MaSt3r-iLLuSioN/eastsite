@@ -618,4 +618,48 @@ $(document).ready(function() {
             blueprint3d.three.setWasSpinning(true);
         }
     });
+    
+    var isFullscreen = false;
+    $("#fullscreen_btn").click(function (){ 
+        var prop = {};
+        var speed = 910;
+        if(!isFullscreen){ // MAXIMIZATION
+            prop.width = "100%";
+            prop.height = "100%";
+            isFullscreen = true;
+            $("#designer_wrapper").css({"position":"fixed","top":"0","left":"0"});
+            $("#designer_wrapper").animate(prop,
+            {
+                duration: speed,
+                step: function( currentStep )
+                {       
+                    //step animation complete
+                    //do something here
+                    blueprint3d.three.updateWindowSize();
+                    viewerFloorplanner.updateFloorplanView();
+                }
+            }); 
+            //$('#designer_wrapper').css({
+                //position: 'fixed',
+                //top: 0,
+                //right: 0,
+                //bottom: 0,
+                //left: 0,
+                //zIndex: 999
+            //});
+            $("#header").hide();
+            //isFullscreen = true;
+            //viewerFloorplanner.updateFloorplanView();
+            //blueprint3d.three.updateWindowSize();
+        }
+        else{                    
+          isFullscreen = false;
+          console.log('fullscreen off');
+          $('#designer_wrapper').attr("style","");
+          $("#header").show();
+          viewerFloorplanner.updateFloorplanView();
+          blueprint3d.three.updateWindowSize();
+        }
+
+    });
 });
