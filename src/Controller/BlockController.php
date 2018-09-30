@@ -319,8 +319,9 @@ class BlockController extends BaseController
         else
         {
             //not a error (netbeans ide doesnt know lol!)
-            $blockClass = $em->getRepository('\\App\\Entity\\BlockTypes\\' . $block->getType()->getClass() . 'BlockTypeEntity'::class)->findBy(array('block'=> $block->getId()));
-            $blockClass = $blockClass[0];
+            $blockClassName = $block->getType()->getClass() . 'BlockTypeEntity';
+            $blockClassTmp = $em->getRepository('\\App\\Entity\\BlockTypes\\' . $blockClassName)->findBy(array('block'=> $block->getId()));
+            $blockClass = $blockClassTmp[0];
         }
         $blockClass->setBlock($block);
         if($block->getTypeset() != 1)
