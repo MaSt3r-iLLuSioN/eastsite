@@ -512,7 +512,7 @@ var ViewerFloorplanner = function(blueprint3d) {
 
 var mainControls = function(blueprint3d) {
   var blueprint3d = blueprint3d;
-
+  var isFullscreen = false;
   function newDesign() {
     blueprint3d.model.loadSerialized('{"floorplan":{"corners":{"f90da5e3-9e0e-eba7-173d-eb0b071e838e":{"x":204.85099999999989,"y":289.052},"da026c08-d76a-a944-8e7b-096b752da9ed":{"x":672.2109999999999,"y":289.052},"4e3d65cb-54c0-0681-28bf-bddcc7bdb571":{"x":672.2109999999999,"y":-178.308},"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2":{"x":204.85099999999989,"y":-178.308}},"walls":[{"corner1":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","corner2":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","corner2":"da026c08-d76a-a944-8e7b-096b752da9ed","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"da026c08-d76a-a944-8e7b-096b752da9ed","corner2":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","corner2":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","frontTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"rooms/textures/wallmap.png","stretch":true,"scale":0}}],"wallTextures":[],"floorTextures":{},"newFloorTextures":{}},"items":[]}');
   }
@@ -546,10 +546,47 @@ var mainControls = function(blueprint3d) {
         spinning = !spinning;
         blueprint3d.three.setSpin(spinning);
         if(spinning) {
-          $("#toggleSpin").addClass('btn-primary');
+            $('#toggleSpin').removeClass('btn-default');
+            $("#toggleSpin").addClass('btn-primary-new');
         } else {
-          $("#toggleSpin").removeClass('btn-primary');
+            $("#toggleSpin").removeClass('btn-primary-new');
+            $("#toggleSpin").addClass('btn-default');
         }
+    }
+  }
+  
+  function toggleFullscreen() {
+      var prop = {};
+    var speed = 910;
+    if(!isFullscreen){ // MAXIMIZATION
+        prop.width = "100%";
+        prop.height = "100%";
+        isFullscreen = true;
+        $("#designer_wrapper").css({"position":"fixed","top":"0","left":"0"});
+        $("#fullscreen-icon").removeClass("icon-fullscreen-icon");
+        $("#fullscreen-icon").addClass("icon-exit-fullscreen-icon");
+        $("#designer_wrapper").animate(prop,
+        {
+            duration: speed,
+            step: function( currentStep )
+            {       
+                //step animation complete
+                //do something here
+                blueprint3d.three.updateWindowSize();
+                //viewerFloorplanner.updateFloorplanView();
+            }
+        }); 
+        $("#header").hide();
+    }else{                    
+        isFullscreen = false;
+        console.log('fullscreen off');
+        $("#fullscreen-icon").removeClass("icon-exit-fullscreen-icon");
+        $("#fullscreen-icon").addClass("icon-fullscreen-icon");
+        $('#designer_wrapper').attr("style","");
+        $("#header").show();
+        //viewerFloorplanner.updateFloorplanView();
+        
+        blueprint3d.three.updateWindowSize();
     }
   }
 
@@ -558,6 +595,7 @@ var mainControls = function(blueprint3d) {
     $("#loadFile").change(loadDesign);
     $("#saveFile").click(saveDesign);
     $("#toggleSpin").click(toggleSpin);
+    $("#fullscreen_btn").click(toggleFullscreen);
   }
 
   init();
@@ -588,9 +626,11 @@ $(document).ready(function() {
   mainControls(blueprint3d);
   var spin = blueprint3d.three.getSpin();
     if(spin){
-        $("#toggleSpin").addClass('btn-primary');
+        $('#toggleSpin').removeClass('btn-default');
+        $("#toggleSpin").addClass('btn-primary-new');
     } else {
-        $('#toggleSpin').removeClass('btn-primary');
+        $('#toggleSpin').removeClass('btn-primary-new');
+        $('#toggleSpin').addClass('btn-default');
     }
   // This serialization format needs work
   // Load a simple rectangle room
@@ -619,47 +659,4 @@ $(document).ready(function() {
         }
     });
     
-    var isFullscreen = false;
-    $("#fullscreen_btn").click(function (){ 
-        var prop = {};
-        var speed = 910;
-        if(!isFullscreen){ // MAXIMIZATION
-            prop.width = "100%";
-            prop.height = "100%";
-            isFullscreen = true;
-            $("#designer_wrapper").css({"position":"fixed","top":"0","left":"0"});
-            $("#designer_wrapper").animate(prop,
-            {
-                duration: speed,
-                step: function( currentStep )
-                {       
-                    //step animation complete
-                    //do something here
-                    blueprint3d.three.updateWindowSize();
-                    viewerFloorplanner.updateFloorplanView();
-                }
-            }); 
-            //$('#designer_wrapper').css({
-                //position: 'fixed',
-                //top: 0,
-                //right: 0,
-                //bottom: 0,
-                //left: 0,
-                //zIndex: 999
-            //});
-            $("#header").hide();
-            //isFullscreen = true;
-            //viewerFloorplanner.updateFloorplanView();
-            //blueprint3d.three.updateWindowSize();
-        }
-        else{                    
-          isFullscreen = false;
-          console.log('fullscreen off');
-          $('#designer_wrapper').attr("style","");
-          $("#header").show();
-          viewerFloorplanner.updateFloorplanView();
-          blueprint3d.three.updateWindowSize();
-        }
-
-    });
 });

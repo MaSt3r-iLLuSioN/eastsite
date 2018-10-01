@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
-
+{% block title %}Home Designer{% endblock %}
+{% block page_header %}Home Designer{% endblock %}
 {% block body %}
 <div class="container-fluid">
     <div class="row main-row">
@@ -190,50 +190,39 @@
                         background-color: #ffffff;
                     }
                 </style>
-                <a id="fullscreen_btn" href="#" class="btn btn-primary" style="position:relative;top:80px;left:10px;"><i class="fa fa-arrows-alt"></i></a>
                 <!-- 3D Viewer -->
                 <div id="viewer">
 
                     <div id="main-controls">
                         <div class="btn-group">
-                            <button id="new" type="button" class="btn btn-default"><i class="fa fa-sticky-note fa-2x"></i></button>
-                            <button id="save" type="button" class="btn btn-default"><i class="fa fa-pencil fa-2x"></i></button>
-                            <button id="load" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
+                            <button id="new" type="button" class="btn btn-default"><i class="fa fa-plus fa-2x"></i></button>
+                            <button id="saveFile" type="button" class="btn btn-default"><i class="fa fa-archive fa-2x"></i></button>
+                            <button id="load" type="button" class="btn btn-default btn-file"><input type="file" class="hidden-input" id="loadFile"><i class="fa fa-hdd-o fa-2x"></i></button>
+                            <button id="fullscreen_btn" type="button" class="btn btn-default"><i id="fullscreen-icon" class="icon-fullscreen-icon fa-2x"></i></button>
                             <button id="toggleSpin" type="button" class="btn btn-default"><i class="fa fa fa-refresh fa-2x"></i></button>
                         </div>
-                        <a href="#" class="btn btn-default btn-sm"  style="color:#f7da77;" id="new">
-                            <i class="fa fa-sticky-note"></i> New
-                        </a>
-                        <a href="#" class="btn btn-default btn-sm" style="color:#f7da77;" id="saveFile">
-                          Save Plan
-                        </a>
-                        <a class="btn btn-sm btn-default btn-file" style="color:#f7da77;">
-                         <input type="file" class="hidden-input" id="loadFile">
-                         Load Plan
-                        </a>
                     </div>
 
                     <div id="camera-controls">
-                      <a href="#" class="btn btn-default bottom" style="color:#f7da77;padding:1px;" id="reset-view">
-                        <i class="fa fa-home fa-4x"></i>
-                      </a>
+                      
 
-                      <span>&nbsp;</span>
-
-                      <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-left">
-                        <i class="fa fa-arrow-left fa-4x"></i>
-                      </a>
-                      <span class="btn-group-vertical">
-                        <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-up">
-                          <i class="fa fa-arrow-up fa-4x"></i>
+                        <a class="btn btn-default bottom" href="#" id="move-left">
+                          <i class="fa fa-arrow-left fa-2x"></i>
                         </a>
-                        <a class="btn btn-default" href="#" style="color:#f7da77;padding:1px;" id="move-down">
-                          <i class="fa fa-arrow-down fa-4x"></i>
+                        <span class="btn-group-vertical">
+                            <a class="btn btn-default" href="#" id="move-up">
+                                <i class="fa fa-arrow-up fa-2x"></i>
+                            </a>
+                            <a href="#" class="btn btn-default bottom" id="reset-view">
+                                <i class="fa fa-home fa-2x"></i>
+                            </a>
+                            <a class="btn btn-default" href="#" id="move-down">
+                                <i class="fa fa-arrow-down fa-2x"></i>
+                            </a>
+                        </span>
+                        <a class="btn btn-default bottom" href="#" id="move-right">
+                            <i class="fa fa-arrow-right fa-2x"></i>
                         </a>
-                      </span>
-                      <a class="btn btn-default bottom" href="#" style="color:#f7da77;padding:1px;" id="move-right">
-                        <i class="fa fa-arrow-right fa-4x"></i>
-                      </a>
                     </div>
 
                     <div id="loading-modal">
@@ -251,6 +240,7 @@
                             <button id="delete" type="button" class="btn btn-default"><i class="fa fa-eraser fa-2x"></i></button>
                             <button id="text" type="button" class="btn btn-default"><i class="fa fa fa-font fa-2x"></i></button>
                             <button id="select" type="button" class="btn btn-default"><i class="fa fa-hand-o-up fa-2x"></i></button>
+                            <button id="fullscreen_btn" type="button" class="btn btn-default"><span class="icon-fullscreen-icon fa-2x"></span></button>
                         </div>
 
                         <span class="pull-right">

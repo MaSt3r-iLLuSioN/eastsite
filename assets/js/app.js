@@ -9,6 +9,7 @@
 require('../css/tether.css');
 require('../css/responsive.css');
 require('../fonts/font-awesome/font-awesome.min.css');
+require('../custom-font.css');
 require('../fonts/simple-line-icons.css');
 require('../extras/owl/owl.carousel.css');
 require('../extras/owl/owl.theme.css');

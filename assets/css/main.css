@@ -99,9 +99,8 @@ a:focus {
 .btn,
 button {
   padding: 7px 30px;
-  border-radius: 0px;
   font-weight: 400;
-  color: #fff;
+  color: #a62825;
   font-size: 13px;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
@@ -116,6 +115,10 @@ button:hover {
 }
 .btn-secondary {
     color:#999;
+}
+.btn-primary-new {
+    background-color: #a62825;
+    color: #fff;
 }
 .section {
   padding-bottom: 10px;
@@ -3763,6 +3766,7 @@ ul.contact-info2 i.fa {
 .btn-common::before {
     background: #f7da77 none repeat scroll 0 0;
     border: 1px solid #a62825;
+    border-radius:5px;
 }
 .light-border-right-1 {
     border-right:1px solid rgba(0, 0, 0, .1);

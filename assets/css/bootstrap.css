@@ -2293,7 +2293,6 @@ fieldset[disabled] a.btn {
 .btn-default:hover {
   color: #fff;
     background-color: #a62825;
-    border-color: #f7da77;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2969,6 +2968,8 @@ input[type="button"].btn-block {
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  border-radius: 5px;
+  border:1px solid #a62825;
 }
 
 .btn-group > .btn,
