@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 {% block title %}{{project.title}}{% endblock %}
 {% block metakeywords %}
-        <meta name="keywords" content="{{project.keywords}}">
+        <meta name="keywords" content="{% for keyword in project.keywords %}{{keyword.title}},{% endfor %}">
         <meta name="description" content="{{project.metadescription}}">
 {% endblock %}
 {% block page_header %}{{project.title}}{% endblock %}

@@ -3,7 +3,7 @@
 {% block metakeywords %}
     {% if blogPost is empty %}
     {% else %}
-        <meta name="keywords" content="{{blogPost.keywords}}">
+        <meta name="keywords" content="{% for keyword in blogPost.keywords %}{{keyword.title}},{% endfor %}">
         <meta name="description" content="{{blogPost.metadescription}}">
         <meta name="author" content="{{blogPost.author.username}}">
     {% endif %}

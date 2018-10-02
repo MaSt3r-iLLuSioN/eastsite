@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use App\Service\Breadcrumbs;
 use App\Service\Fotorama;
@@ -12,12 +11,14 @@ use App\Service\FileUploaderUtility;
 use App\Service\Filterizer;
 use App\Service\Liker;
 use App\Service\Commentor;
+use App\Service\KeywordHelper;
 use App\Entity\Blog;
 use App\Entity\CategoryGroup;
 use App\Entity\CategoryEntity;
 use App\Entity\FileEntity;
 use App\Form\Type\JQueryFileUploaderType;
 use App\Form\Type\CKEditorType;
+use App\Form\Type\AutoTagsType;
 
 use Doctrine\ORM\PersistentCollection;
 
@@ -53,7 +54,7 @@ class BlogController extends BaseController
     /**
      * @Route("/admin/blog/add", name="addBlogPost")
      */
-    public function addPost(Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, Request $request)
+    public function addPost(Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, Request $request, KeywordHelper $keywordHelper)
     {
         parent::hideProfiler($this->getUser());
         $this->denyAccessUnlessGranted('add_blog_post', null);
@@ -94,9 +95,13 @@ class BlogController extends BaseController
                     'twig'=>$this->container->get('twig'),
                     'dispatcher'=>$this->container->get('event_dispatcher'),
                 ))
-                ->add('metakeywords', TextType::class, array(
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Post Meta Keywords',
+                        'placeholder' => 'Keywords',
                         'class' => 'form-control',
                         'name' => 'metakeywords'
                     )
@@ -158,7 +163,18 @@ class BlogController extends BaseController
             $title = $post->getTitle();
             $title = str_replace(' ', '-', strtolower($title));
             $post->setSystemtitle($title);
-            $post->setKeywords($form->get('metakeywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $post->addKeyword($keyword);
+            }
             $post->setMetadescription($form->get('metadescription')->getData());
             $post->setAuthor($this->getUser());
             $post->setContent($form->get('content')->getData());
@@ -166,14 +182,9 @@ class BlogController extends BaseController
             $post->setType('blog');
             $category = $em->getRepository(CategoryEntity::class)->findBy(['id'=>$form->get('category')->getData()]);
             $post->setCategory($category[0]);
-            //get uploaded file name(s)
-            //$file = $form->get('image')->getData();
-            
-
-            //$post->setImage($fileName);
             $em->persist($post);
             $em->flush();
-            $this->addFlash('notice', 'Blog post ' . $post->getTitle() . ' was created successfully!');
+            $this->addFlash('success', 'Blog post "' . $post->getTitle() . '" was created successfully!');
                 return $this->redirectToRoute('adminBlog');
         }
         return $this->render('blog/add_post.html.twig',array(
@@ -183,7 +194,7 @@ class BlogController extends BaseController
     /**
      * @Route("/admin/blog/{blog}/edit", name="editBlogPost")
      */
-    public function editPost(Blog $blog, Breadcrumbs $breadcrumbs, FileUploaderUtility $fileUploaderUtil, PrettyPhoto $prettyPhoto, Request $request)
+    public function editPost(Blog $blog, Breadcrumbs $breadcrumbs, FileUploaderUtility $fileUploaderUtil, PrettyPhoto $prettyPhoto, Request $request,KeywordHelper $keywordHelper)
     {
         parent::hideProfiler($this->getUser());
         $this->denyAccessUnlessGranted('add_blog_post', null);
@@ -254,13 +265,17 @@ class BlogController extends BaseController
                     'dispatcher'=>$this->container->get('event_dispatcher'),
                     'data'=>$blog->getContent()
                 ))
-                ->add('metakeywords', TextType::class, array(
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Post Meta Keywords',
+                        'placeholder' => 'Keywords',
                         'class' => 'form-control',
                         'name' => 'metakeywords'
                     ),
-                    'data'=>$blog->getKeywords()
+                    'data'=>$keywordHelper->makeKeywordString($blog->getKeywords())
                 ))
                 ->add('metadescription', TextareaType::class, array(
                     'attr' => array(
@@ -304,14 +319,27 @@ class BlogController extends BaseController
             $title = $blog->getTitle();
             $title = str_replace(' ', '-', strtolower($title));
             $blog->setSystemtitle($title);
-            $blog->setKeywords($form->get('metakeywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //remove keywords from post
+            $blog->resetKeywords();
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $blog->addKeyword($keyword);
+            }
             $blog->setMetadescription($form->get('metadescription')->getData());
             $blog->setContent($form->get('content')->getData());
             $category = $em->getRepository(CategoryEntity::class)->findBy(['id'=>$form->get('category')->getData()]);
             $blog->setCategory($category[0]);
             $em->persist($blog);
             $em->flush();
-            $this->addFlash('notice', 'Blog post ' . $blog->getTitle() . ' was edited successfully!');
+            $this->addFlash('success', 'Blog post "' . $blog->getTitle() . '" was edited successfully!');
                 return $this->redirectToRoute('adminBlog');
         }
         return $this->render('blog/edit_post.html.twig', array(
@@ -347,12 +375,20 @@ class BlogController extends BaseController
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            
+            //we need to remove all files associated with this blog as well
+            $files = $blog->getFiles();
+            foreach($files as $file)
+            {
+                $blog->removeFile($file);
+                $em->persist($blog);
+                $em->flush();
+                $file->removeFile($this->getParameter('upload_directory'));
+                $em->remove($file);
+                $em->flush();
+            }
             $em->remove($blog);
             $em->flush();
-            $em->remove($blog);
-            $em->flush();
-            $this->addFlash('notice', 'Blog Post: '.$blog->getTitle() . ' was removed successfully!');
+            $this->addFlash('success', 'Blog Post "'.$blog->getTitle() . '" was deleted successfully!');
             return $this->redirectToRoute('adminBlog');
         }
         

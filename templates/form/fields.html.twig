@@ -88,3 +88,6 @@
     {% endif %}
     </table>
 {% endblock %}
+{% block autotags_widget %}
+    <input id="{{id}}" name="form[{{attr.name}}]" value="{{data}}" class="{{attr.class}}" placeholder="{{attr.placeholder}}" type="text" /> 
+{% endblock %}

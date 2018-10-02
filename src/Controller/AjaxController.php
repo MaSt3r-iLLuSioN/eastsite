@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\FileEntity;
 use App\Entity\User;
 use App\Entity\LikableEntity;
+use App\Entity\KeywordEntity;
 use App\Entity\Blog;
 use App\Entity\Project;
 use App\Service\FileUploader;
@@ -60,6 +61,21 @@ class AjaxController extends Controller
             return new JsonResponse($response);
         }
         
+    }
+    /**
+     * Returns all site keyword entities via json 
+     * @Route("/ajax/keywords", name="ajaxKeywords")
+     */
+    public function ajaxKeywords()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $keywords = $em->getRepository(KeywordEntity::class)->findAll();
+        $content = array();
+        foreach($keywords as $keyword)
+        {
+            $content[] = $keyword->getTitle();
+        }
+        return new JsonResponse($content);
     }
     /**
      * @Route("/file/upload/{entity}/{folder}/{file}", name="fileUploader")

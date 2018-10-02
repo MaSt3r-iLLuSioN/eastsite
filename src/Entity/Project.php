@@ -71,6 +71,7 @@ class Project extends LikableEntity
     }
     public function __construct()
     {
+        parent::__construct();
         $this->files = new ArrayCollection();
         $this->type = 'project';
     }

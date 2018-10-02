@@ -2,40 +2,38 @@
 {% block title %}Site Projects{% endblock %}
 {% block page_header %}Site Projects{% endblock %}
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <a href="/admin/projects/add" class="btn btn-common btn-sm pull-right m-a-1">Add Project</a>
-            <table class="table">
-                <thead class="thead-inverse">
+    <div class="row">
+        <a href="/admin/projects/add" class="btn btn-common btn-sm pull-right m-a-1">Add Project</a>
+        <table class="table">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Project Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody style="width:100%;">
+                {% if projects is empty %}
                     <tr>
-                        <th>Project Title</th>
-                        <th>Category</th>
-                        <th>Author</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                        <td>No Projects have been added.</td>
                     </tr>
-                </thead>
-                <tbody style="width:100%;">
-                    {% if projects is empty %}
+                {% else %}
+                    {% for project in projects %}
                         <tr>
-                            <td>No Projects have been added.</td>
+                            <td><a href="/projects/{{project.generateurl}}">{{project.title}}</a></td>
+                            <td>{{project.category.title}}</td>
+                            <td><a href="/admin/users/view/{{project.author.id}}" class="btn btn-common btn-sm">{{project.author.username}}</a></td>
+                            <td>{{project.datetime|date('m-d-Y')}}</td>
+                            <td>
+                                <a href="/admin/projects/{{project.id}}/edit" class="btn btn-common btn-sm">Edit</a>
+                                <a href="/admin/projects/{{project.id}}/delete" class="btn btn-common btn-sm">Delete</a>
+                            </td>
                         </tr>
-                    {% else %}
-                        {% for project in projects %}
-                            <tr>
-                                <td><a href="/projects/{{project.generateurl}}">{{project.title}}</a></td>
-                                <td>{{project.category.title}}</td>
-                                <td><a href="/admin/users/view/{{project.author.id}}" class="btn btn-common btn-sm">{{project.author.username}}</a></td>
-                                <td>{{project.datetime|date('m-d-Y')}}</td>
-                                <td>
-                                    <a href="/admin/projects/{{project.id}}/edit" class="btn btn-common btn-sm">Edit</a>
-                                    <a href="/admin/projects/{{project.id}}/delete" class="btn btn-common btn-sm">Delete</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

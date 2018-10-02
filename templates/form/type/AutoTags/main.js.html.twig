@@ -1,0 +1,24 @@
+<script src="/assets/libraries/typeahead/typeahead.js"></script>
+<script src="/assets/libraries/bootstraptags/bootstrap-tagsinput.js"></script>
+<script>
+    $(document).ready(function(){
+        
+        $.getJSON("{{dataUrl}}", function(json) {
+            $("#form_{{id}}").tagsinput({
+                typeahead: {
+                    source: json
+                }
+            });
+            $('#form_{{id}}').on('itemAdded', function(event) {
+                // event.item: contains the item
+                var val = $("#form_{{id}}").val();
+                $("#form_{{id}}").attr("value",val);
+                //console.log($("#form_{{id}}").val());
+                setTimeout(function() {
+                    $('.bootstrap-tagsinput :input').val(''); // Patch: In my case when selecting an option, the input (with typeahead) added the suggested text twice)
+                }, 0);
+            });
+        });
+        
+    });
+</script>

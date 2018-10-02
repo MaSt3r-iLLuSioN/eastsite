@@ -14,11 +14,13 @@ use App\Service\FileUploaderUtility;
 use App\Service\Filterizer;
 use App\Service\Liker;
 use App\Service\HereMapper;
+use App\Service\KeywordHelper;
 use App\Entity\CategoryGroup;
 use App\Entity\CategoryEntity;
 use App\Entity\FileEntity;
 use App\Form\Type\JQueryFileUploaderType;
 use App\Form\Type\CKEditorType;
+use App\Form\Type\AutoTagsType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +37,7 @@ class ProjectController extends BaseController
     /**
      * @Route("/admin/projects/add", name="addProject")
      */
-    public function createProject(Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, Request $request, HereMapper $hereMapper)
+    public function createProject(Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, Request $request, HereMapper $hereMapper, KeywordHelper $keywordHelper)
     {
         parent::hideProfiler($this->getUser());
         $this->denyAccessUnlessGranted('add_project', null);
@@ -95,9 +97,13 @@ class ProjectController extends BaseController
                     'twig'=>$this->container->get('twig'),
                     'dispatcher'=>$this->container->get('event_dispatcher'),
                 ))
-                ->add('metakeywords', TextType::class, array(
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Project Meta Keywords',
+                        'placeholder' => 'Keywords',
                         'class' => 'form-control',
                         'name' => 'metakeywords'
                     )
@@ -137,7 +143,18 @@ class ProjectController extends BaseController
             $title = $project->getTitle();
             $title = str_replace(' ', '-', strtolower($title));
             $project->setSystemtitle($title);
-            $project->setKeywords($form->get('metakeywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $project->addKeyword($keyword);
+            }
             $project->setMetadescription($form->get('metadescription')->getData());
             $project->setAuthor($this->getUser());
             $project->setContent($form->get('content')->getData());
@@ -159,7 +176,7 @@ class ProjectController extends BaseController
             //$post->setImage($fileName);
             $em->persist($project);
             $em->flush();
-            $this->addFlash('notice', 'Project ' . $project->getTitle() . ' was created successfully!');
+            $this->addFlash('success', 'Project "' . $project->getTitle() . '" was created successfully!');
                 return $this->redirectToRoute('adminProjects');
         }
         return $this->render('project/add_project.html.twig',array(
@@ -191,7 +208,7 @@ class ProjectController extends BaseController
      * @Route("/admin/projects/{project}/edit", name="editProject")
      * @param Project $project Project is the entity for project type content
      */
-    public function editProject(Project $project, Breadcrumbs $breadcrumbs, FileUploaderUtility $fileUploaderUtil, PrettyPhoto $prettyPhoto, Request $request, HereMapper $hereMapper)
+    public function editProject(Project $project, Breadcrumbs $breadcrumbs, FileUploaderUtility $fileUploaderUtil, PrettyPhoto $prettyPhoto, Request $request, HereMapper $hereMapper, KeywordHelper $keywordHelper)
     {  
         $this->denyAccessUnlessGranted('edit_project', null);
         parent::hideProfiler($this->getUser());
@@ -280,13 +297,17 @@ class ProjectController extends BaseController
                     'dispatcher'=>$this->container->get('event_dispatcher'),
                     'data'=>$project->getContent()
                 ))
-                ->add('metakeywords', TextType::class, array(
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Project Meta Keywords',
+                        'placeholder' => 'Keywords',
                         'class' => 'form-control',
                         'name' => 'metakeywords'
                     ),
-                    'data'=>$project->getKeywords()
+                    'data'=>$keywordHelper->makeKeywordString($project->getKeywords())
                 ))
                 ->add('metadescription', TextareaType::class, array(
                     'attr' => array(
@@ -338,7 +359,20 @@ class ProjectController extends BaseController
             $title = $project->getTitle();
             $title = str_replace(' ', '-', strtolower($title));
             $project->setSystemtitle($title);
-            $project->setKeywords($form->get('metakeywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //reset projects keywords
+            $project->resetKeywords();
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $project->addKeyword($keyword);
+            }
             $project->setMetadescription($form->get('metadescription')->getData());
             $project->setContent($form->get('content')->getData());
             $project->setStatus($form->get('status')->getData());
@@ -355,7 +389,7 @@ class ProjectController extends BaseController
             $project->setStyle($form->get('style')->getData());
             $em->persist($project);
             $em->flush();
-            $this->addFlash('notice', 'Project ' . $project->getTitle() . ' was edited successfully!');
+            $this->addFlash('success', 'Project "' . $project->getTitle() . '" was edited successfully!');
                 return $this->redirectToRoute('adminProjects');
         }
         return $this->render('project/edit_project.html.twig', array(
@@ -391,12 +425,20 @@ class ProjectController extends BaseController
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            
+            //we need to remove all files associated with this project as well
+            $files = $project->getFiles();
+            foreach($files as $file)
+            {
+                $project->removeFile($file);
+                $em->persist($project);
+                $em->flush();
+                $file->removeFile($this->getParameter('upload_directory'));
+                $em->remove($file);
+                $em->flush();
+            }
             $em->remove($project);
             $em->flush();
-            $em->remove($project);
-            $em->flush();
-            $this->addFlash('notice', 'Project: '.$project->getTitle() . ' was removed successfully!');
+            $this->addFlash('success', 'Project "'.$project->getTitle() . '" was deleted successfully!');
             return $this->redirectToRoute('adminProjects');
         }
         

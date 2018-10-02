@@ -51,6 +51,10 @@ services:
         arguments:
             - '@snc_redis.default'
     
+    app.keywordHelper:
+        alias: App\Service\KeywordHelper
+        public: true
+    
     app.fileUtility:
         alias: App\Service\FileUploaderUtility
         public: true
