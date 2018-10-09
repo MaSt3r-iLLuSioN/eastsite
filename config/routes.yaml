@@ -36,3 +36,6 @@ blogConfig:
 adminDashboard:
     path: /admin
     controller: App\Controller\ConfigController::adminDashboard
+viewMenus:
+    path: /admin/menus
+    controller: App\Controller\MenuController::viewMenus
