@@ -20,12 +20,10 @@
     
     <!-- Viewport Meta Tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %} | Eastway Custom Homes</title>
+    <title>{% block title %}{% endblock %} | {{config.title}}</title>
     {% block stylesheets %}
-        <link rel="preload" href="{{ asset('assets/libraries/jqueryui/jquery-ui.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('build/app.css') }}"></noscript>
-        <link rel="preload" href="{{ asset('build/app.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('build/app.css') }}"></noscript>
+        <link rel="stylesheet" href="{{ asset('assets/libraries/jqueryui/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     {% endblock %}
     
   </head>
