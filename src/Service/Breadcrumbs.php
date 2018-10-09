@@ -33,6 +33,13 @@ class Breadcrumbs {
     }
     public function addBreadcrumb(string $title, string $url)
     {
+        //make sure no duplicates
+        foreach($this->breadcrumbs as $crumb)
+        {
+            foreach($crumb as $c)
+                if($c == $url)
+                    return;
+        }
         $this->breadcrumbs[] = array($title=>$url);
     }
     private function getBreadcrumbs()
