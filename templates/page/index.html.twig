@@ -1,4 +1,8 @@
 {% extends "base.html.twig" %}
+{% block metakeywords %}
+        <meta name="keywords" content="{% for keyword in page.keywords %}{{keyword.title}},{% endfor %}">
+        <meta name="description" content="{{page.metadescription}}">
+{% endblock %}
 {% block title %}{{page.title}}{% endblock %}
 {% block page_header %}{{page.title}}{% endblock %}
 {% block body %}
