@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block title %}Home{% endblock %}
+{% block metakeywords %}
+        <meta name="keywords" content="{% for keyword in config.keywords %}{{keyword.title}},{% endfor %}">
+        <meta name="description" content="{{config.metadescription}}">
+{% endblock %}
 {% block page_header %}Eastway Custom Homes{% endblock %}
 {% block body %}     
 {% endblock %}
