@@ -66,10 +66,14 @@ class PageEntity
      private $content;
      
      /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * Many base related entities have Many Keywords.
+     * @ORM\ManyToMany(targetEntity="KeywordEntity")
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="node_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="keyword_id", referencedColumnName="id")}
+     *      )
      */
-     private $keywords;
+    private $keywords;
      
      /**
      * @ORM\Column(type="boolean")
@@ -91,7 +95,40 @@ class PageEntity
      {
          $this->files = new ArrayCollection();
          $this->pages = new ArrayCollection();
+         $this->keywords = new ArrayCollection();
      }
+     
+     public function getKeywords()
+    {
+        return $this->keywords;
+    }
+    
+    public function addKeyword(KeywordEntity $keyword)
+    {
+        if(!$this->keywords->contains($keyword))
+            $this->keywords->add ($keyword);
+    }
+    public function removeKeyword(KeywordEntity $keyword) : bool
+    {
+        if($this->keywords->contains($keyword))
+        {
+            $this->keywords->removeElement($keyword);
+            return true;
+        }
+        return false;
+    }
+    
+    public function resetKeywords()
+    {
+        $this->keywords = new ArrayCollection();
+    }
+    
+    public function hasKeyword(KeywordEntity $keyword) : bool
+    {
+        if($this->keywords->contains($keyword))
+            return true;
+        return false;
+    }
      
      public function getId()
      {
@@ -184,14 +221,6 @@ class PageEntity
      public function setMenu($menu)
      {
          $this->menu = $menu;
-     }
-     public function getKeywords() : string
-     {
-         return $this->keywords;
-     }
-     public function setKeywords(string $keywords)
-     {
-         $this->keywords = $keywords;
      }
      public function getUrl() : string
      {
