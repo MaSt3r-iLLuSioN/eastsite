@@ -7,10 +7,12 @@ use App\Entity\FileEntity;
 use App\Service\Breadcrumbs;
 use App\Service\PrettyPhoto;
 use App\Service\Fotorama;
+use App\Service\KeywordHelper;
 use App\Service\FileUploaderUtility;
 use App\Service\HelperMethods;
 use App\Form\Type\JQueryFileUploaderType;
 use App\Form\Type\CKEditorType;
+use App\Form\Type\AutoTagsType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,7 +50,7 @@ class PageController extends BaseController
     /**
      * @Route("/admin/pages/add", name="addPage")
      */
-    public function addPage(Request $request,Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, HelperMethods $helper)
+    public function addPage(Request $request,Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, HelperMethods $helper, KeywordHelper $keywordHelper)
     {
         parent::hideProfiler($this->getUser());
         //only admin can add a site page
@@ -133,11 +135,15 @@ class PageController extends BaseController
                         'name'=>'showsubpages'
                     )
                 ))
-                ->add('keywords', TextareaType::class, array(
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Meta Keywords seperated by comma',
-                        'class'=>'form-control',
-                        'name'=>'keywords'
+                        'placeholder' => 'Keywords',
+                        'class' => 'form-control',
+                        'name' => 'metakeywords'
                     )
                 ))
                 ->add('metadescription', TextareaType::class, array(
@@ -214,7 +220,18 @@ class PageController extends BaseController
             $page->setTitle($form->get('title')->getData());
             $page->setContent($form->get('content')->getData());
             $page->setLayout($layout);
-            $page->setKeywords($form->get('keywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $page->addKeyword($keyword);
+            }
             $page->setUrl($this->clean($page->getTitle()));
             $page->setMetadescription($form->get('metadescription')->getData());
             $page->setShowsubpages($form->get('showsubpages')->getData());
@@ -245,7 +262,7 @@ class PageController extends BaseController
                 $em->flush();
             }
             
-            $this->addFlash('notice', 'Page: '. $page->getTitle() . ' was created successfully!');
+            $this->addFlash('success', 'Page: '. $page->getTitle() . ' was created successfully!');
             return $this->redirectToRoute('page', array('url'=>$page->getUrl()));
         }
         return $this->render('page/add-page.html.twig', array(
@@ -263,7 +280,7 @@ class PageController extends BaseController
     /**
      * @Route("/admin/pages/{url}/edit", name="editPage")
      */
-    public function editPage(string $url, Request $request,Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, FileUploaderUtility $fileUploaderUtil, HelperMethods $helper)
+    public function editPage(string $url, Request $request,Breadcrumbs $breadcrumbs, PrettyPhoto $prettyPhoto, FileUploaderUtility $fileUploaderUtil, HelperMethods $helper, KeywordHelper $keywordHelper)
     {
         parent::hideProfiler($this->getUser());
         $this->denyAccessUnlessGranted('edit_page', null);
@@ -373,13 +390,17 @@ class PageController extends BaseController
                         'name'=>'showsubpages'
                     )
                 ))
-                ->add('keywords', TextareaType::class, array(
-                    'data' => $page->getKeywords(),
+                ->add('metakeywords', AutoTagsType::class, array(
+                    'twig'=>$this->container->get('twig'),
+                    'dispatcher'=>$this->container->get('event_dispatcher'),
+                    'dataUrl'=>'/ajax/keywords',
+                    'id'=>'metakeywords',
                     'attr' => array(
-                        'placeholder' => 'Meta Keywords seperated by comma',
-                        'class'=>'form-control',
-                        'name'=>'keywords'
-                    )
+                        'placeholder' => 'Keywords',
+                        'class' => 'form-control',
+                        'name' => 'metakeywords'
+                    ),
+                    'data'=>$keywordHelper->makeKeywordString($page->getKeywords())
                 ))
                 ->add('metadescription', TextareaType::class, array(
                     'data'=>$page->getMetadescription(),
@@ -451,6 +472,12 @@ class PageController extends BaseController
             }
             //get the layout through id
             $layout = $em->getRepository(LayoutEntity::class)->find($form->get('layout')->getData());
+            foreach($files as $file)
+            {
+                //remove all files connected to post
+                $page->removeFile($file);
+                
+            }
             $postFiles = $request->get('postfiles');
             if(is_array($postFiles))
             {
@@ -471,13 +498,26 @@ class PageController extends BaseController
             $page->setContent($form->get('content')->getData());
             $page->setLayout($layout);
             $page->setUrl($this->clean($page->getTitle()));
-            $page->setKeywords($form->get('keywords')->getData());
+            //set keyword entities
+            //first add any new keywords
+            $keywordData = $form->get('metakeywords')->getData();
+            $keywordHelper->addNewKeywords($keywordData);
+            
+            //get all the keyword entities based on input
+            $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
+            //reset projects keywords
+            $page->resetKeywords();
+            //loop through the keywords and add them
+            foreach($keywords as $keyword)
+            {
+                $page->addKeyword($keyword);
+            }
             $page->setMetadescription($form->get('metadescription')->getData());
             $page->setShowsubpages($form->get('showsubpages')->getData());
             
             $em->persist($page);
             $em->flush();
-            $this->addFlash('notice', 'Page: '. $page->getTitle() . ' was edited successfully!');
+            $this->addFlash('success', 'Page: '. $page->getTitle() . ' was edited successfully!');
             return $this->redirectToRoute('page', array('url'=>$page->getUrl()));
         }
         return $this->render('page/edit-page.html.twig', array(
@@ -527,9 +567,20 @@ class PageController extends BaseController
                 $em->remove($menu);
                 $em->flush();
             }
+            //we need to remove all files associated with this page as well
+            $files = $page->getFiles();
+            foreach($files as $file)
+            {
+                $page->removeFile($file);
+                $em->persist($page);
+                $em->flush();
+                $file->removeFile($this->getParameter('upload_directory'));
+                $em->remove($file);
+                $em->flush();
+            }
             $em->remove($page);
             $em->flush();
-            $this->addFlash('notice','Page: '. $page->getTitle() . ' was deleted successfully!');
+            $this->addFlash('success','Page: '. $page->getTitle() . ' was deleted successfully!');
             return $this->redirectToRoute('viewPages');
         }
         
