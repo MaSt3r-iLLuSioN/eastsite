@@ -18,7 +18,26 @@
         </p>
       </div>
       <div class="col-md-6  col-sm-6">
-        <div class="social-footer pull-right" style="padding-right: 40px;"><a href="https://www.facebook.com/eastwaycustomhomes/"><i class="fa fa-facebook icon-round"></i></a> <a href="https://twitter.com/EastwayHomes"><i class="fa fa-twitter icon-round"></i></a> <a href="https://www.youtube.com/channel/UC5cQ-WHdkBruy7qWE53sA5w/featured "><i class="fa fa-youtube icon-round"></i></a> <a href="https://www.instagram.com/eastwaycustomhomes/?hl=en"><i class="fa fa-instagram icon-round"></i></a></div>
+        <div class="social-footer pull-right" style="padding-right: 40px;">
+            {% if config.facebooklink is not null %}
+                <a href="https://www.facebook.com/{{config.facebooklink}}" target="_blank"><i class="fa fa-facebook icon-round"></i></a> 
+            {% endif %}
+            {% if config.twitterlink is not null%}
+                <a href="https://www.twitter.com/{{config.twitterlink}}" target="_blank"><i class="fa fa-twitter icon-round"></i></a> 
+            {% endif %}
+            {% if config.youtubelink is not null %}
+                <a href="https://www.youtube.com/{{config.youtubelink}}" target="_blank"><i class="fa fa-youtube icon-round"></i></a> 
+            {% endif %}
+            {% if config.instagramlink is not null %}
+                <a href="https://www.instagram.com/{{config.instagramlink}}" target="_blank"><i class="fa fa-instagram icon-round"></i></a>
+            {% endif %}
+            {% if config.linkedinlink is not null %}
+                <a href="https://www.linkedin.com/{{config.linkedinlink}}" target="_blank"><i class="fa fa-linkedin icon-round"></i></a> 
+            {% endif %}
+            {% if config.googlelink is not null %}
+                <a href="https://www.plus.google.com/{{config.googlelink}}" target="_blank"><i class="fa fa-google-plusog icon-round"></i></a> 
+            {% endif %}
+        </div>
       </div>
     </div>
 </div>
