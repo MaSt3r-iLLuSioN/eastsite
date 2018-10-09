@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\PersistentCollection;
 
 use App\Entity\Project;
+use App\Entity\Config;
 use App\Service\Breadcrumbs;
 use App\Service\Fotorama;
 use App\Service\PrettyPhoto;
@@ -23,7 +23,6 @@ use App\Form\Type\CKEditorType;
 use App\Form\Type\AutoTagsType;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,9 +49,8 @@ class ProjectController extends BaseController
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();
-        
-        $categoryGroup = $em->getRepository(CategoryGroup::class)->findBy(['title'=>'Project Group']);
-        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$categoryGroup[0]]);
+        $config = $em->getRepository(Config::class)->find(1);
+        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$config->getProjectcategory()]);
         $choices = array();
         $project = new Project();
         foreach($categories as $category)
@@ -222,8 +220,8 @@ class ProjectController extends BaseController
         
         $em = $this->getDoctrine()->getManager();
         
-        $categoryGroup = $em->getRepository(CategoryGroup::class)->findBy(['title'=>'Project Group']);
-        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$categoryGroup[0]]);
+        $config = $em->getRepository(Config::class)->find(1);
+        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$config->getProjectcategory()]);
         
         
         $files = $project->getFiles();
