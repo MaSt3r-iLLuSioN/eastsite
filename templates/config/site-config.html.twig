@@ -2,5 +2,82 @@
 {% block title %}Site Configuration{% endblock %}
 {% block page_header %}Site Configuration{% endblock %}
 {% block body %}
-    
+    <form class="shake" enctype="multipart/form-data" action="{{ path('siteConfig') }}" method="post">
+        <fieldset>
+            <legend>Basic Site Settings</legend>
+            <div class="form-group">
+                <label for="title" class="">Site Title:</label>
+                {{form_widget(form.title)}}
+            </div>
+            <label for="postfile">Site Logo:</label>
+            {{form_widget(form.postfile)}}
+        </fieldset>
+        <fieldset>
+            <legend>Site Social Settings</legend>
+            <div class="form-group col-md-3">
+                <label for="googlelink" class="">Site Google Link:</label>
+                <br />
+                <span class="social_span">http://google.com/{Your Google URL}</span>
+                {{form_widget(form.googlelink)}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="facebooklink" class="">Site Facebook Link:</label>
+                <br />
+                <span class="social_span">http://facebook.com/{Your Facebook URL}</span>
+                {{form_widget(form.facebooklink)}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="twitterlink" class="">Site Twitter Link:</label>
+                <br />
+                <span class="social_span">http://twitter.com/{Your Twitter URL}</span>
+                {{form_widget(form.twitterlink)}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="instagramlink" class="">Site Instagram Link:</label>
+                <br />
+                <span class="social_span">http://instagram.com/{Your Instagram URL}</span>
+                {{form_widget(form.instagramlink)}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="youtubelink" class="">Site YouTube Link:</label>
+                <br />
+                <span class="social_span">http://youtube.com/{Your YouTube URL}</span>
+                {{form_widget(form.youtubelink)}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="linkedinlink" class="">Site LinkedIn Link:</label>
+                <br />
+                <span class="social_span">http://linkedin.com/{Your LinkedIn URL}</span>
+                {{form_widget(form.linkedinlink)}}
+            </div>
+            
+        </fieldset>
+        <fieldset>
+            <legend>Meta Settings</legend>
+            <div class="form-group">
+                <label for="metakeywords" class="">Homepage Keywords:</label>
+                {{form_widget(form.metakeywords)}}
+            </div>
+            <div class="form-group">
+                <label for="metadescription" class="">Homepage Description:</label>
+                {{form_widget(form.metadescription)}}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Project Settings</legend>
+            <div class="form-group">
+                <label for="projectcategory" class="">Project Category Group:</label>
+                {{form_widget(form.projectcategory)}}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Blog Settings</legend>
+            <div class="form-group">
+                <label for="blogcategory" class="">Blog Category Group:</label>
+                {{form_widget(form.blogcategory)}}
+            </div>
+        </fieldset>
+        <button class="btn btn-common btn-md" type="submit" id="form-submit" style="pointer-events: all; cursor: pointer;"><i class="fa fa-save"></i> Save Configuration</button>
+        <a href="/admin/config" class="btn btn-common btn-md m-r-1"><i class="fa fa-ban"></i>Cancel</a>
+    </form>
 {% endblock %}
