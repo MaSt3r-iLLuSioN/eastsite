@@ -5,6 +5,7 @@ use App\Entity\Config;
 use App\Entity\PageEntity;
 use App\Entity\LayoutEntity;
 use App\Entity\RegionEntity;
+use App\Service\Breadcrumbs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -54,7 +55,8 @@ class ControllerListener implements EventSubscriberInterface {
         }
         
         $routeName = $event->getRequest()->get('_route');
-        
+        //var_dump($routeName);
+        //exit();
         $headerBlocks = null;
         $contentTopBlocks = null;
         $contentBlocks = null;
@@ -236,10 +238,6 @@ class ControllerListener implements EventSubscriberInterface {
         foreach($blocks as $block)
         {
             $blockListedPages = explode(',',$block->getListedpages());
-            //var_dump($url);
-            //echo '<br>';
-            //var_dump($blockListedPages);
-            //exit();
             if($block->getOnpage() == true)
             {
                 //check each listed page against the url
