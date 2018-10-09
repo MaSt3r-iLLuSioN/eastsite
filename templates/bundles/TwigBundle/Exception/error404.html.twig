@@ -1,14 +1,38 @@
 {% extends "base.html.twig" %}
-{% block title %}404 Error{% endblock %}
-{% block page_header %}404 Error{% endblock %}
+{% block title %}Page Not Found (404){% endblock %}
+{% block page_header %}Error: Page Not Found!{% endblock %}
 {% block body %}
-   <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>404</h1>
-                <h4>Page not found!</h4>
-                <a href="#" class="mt-30 btn btn-outline btn-lg"><i class="fa fa-home"></i> GET BACK HOME</a>
+    <div class="row">
+        <div id="notfound">
+            <div class="notfound-bg"></div>
+            <div class="notfound">
+                    <div class="notfound-404">
+                            <h1>404</h1>
+                    </div>
+                    <h2>we are sorry, but the page you requested was not found</h2>
+                    <a href="/" class="home-btn">Go Home</a>
+                    <a href="/contact" class="contact-btn">Contact us</a>
+                    <div class="notfound-social">
+                        {% if config.facebooklink is not null %}
+                            <a href="https://www.facebook.com/{{config.facebooklink}}"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if config.twitterlink is not null %}
+                            <a href="https://www.twitter.com/{{config.twitterlink}}"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if config.linkedinlink is not null %}
+                            <a href="https://www.linkedin.com/{{config.linkedinlink}}"><i class="fa fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if config.googlelink is not null %}
+                            <a href="https://www.plus.google.com/{{config.googlelink}}"><i class="fa fa-google-plus"></i></a>
+                        {% endif %}
+                        {% if config.instagramlink is not null %}
+                            <a href="https://www.instagram.com/{{config.instagramlink}}"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                        {% if config.youtubelink is not null %}
+                            <a href="https://www.youtube.com/{{config.youtubelink}}"><i class="fa fa-youtube"></i></a>
+                        {% endif %}
+                    </div>
             </div>
         </div>
-    </div> 
+    </div>
 {% endblock %}
