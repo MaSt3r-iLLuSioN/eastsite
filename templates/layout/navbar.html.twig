@@ -5,7 +5,14 @@
         <div class="row mobile-fix">
         <!-- Brand -->
             <a class="navbar-brand col text-center pull-left" style="padding-top:0px;height:50px;position: relative;" href="/">
-                <img class="site-logo" style="background-color:#fff;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-right: 1px solid #a62825;border-left: 1px solid #a62825; border-bottom: 1px solid #a62825;" src="{{ asset('assets/img/logo/' ~ config.logo) }}" width="180" height="90" alt="Eastway Homes">
+                {% for file in config.files %}
+                    <img class="site-logo" 
+                         style="background-color:#fff;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-right: 1px solid #a62825;border-left: 1px solid #a62825; border-bottom: 1px solid #a62825;" 
+                         src="{{ file.url }}" 
+                         width="180" 
+                         height="90" 
+                         alt="{{config.title}}">
+                {% endfor %}
             </a>
             
             <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse' type='button'>☰</button>
