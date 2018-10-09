@@ -11,7 +11,7 @@
     function startClustering(map, ui, getBubbleContent) {
         // First we need to create an array of DataPoint objects,
         // for the ClusterProvider
-        var dataPoints = [{% for node in nodes %}new H.clustering.DataPoint({{node.latitude}}, {{node.longitude}},null,['{{node.files[0].url}}','{{node.title}}','{{node.location}}','{{node.category.categorygroup.url}}{{node.category.url}}/{{node.systemtitle}}','{{node.status}}']),{% endfor %}];
+        var dataPoints = [{% for node in nodes %}new H.clustering.DataPoint({{node.latitude}}, {{node.longitude}},null,['{% if node.files[0] is defined %}{{node.files[0].url}}{% endif %}','{{node.title}}','{{node.location}}','{{node.category.categorygroup.url}}{{node.category.url}}/{{node.systemtitle}}','{{node.status}}']),{% endfor %}];
 
         // Create a clustering provider with custom options for clusterizing the input
         var clusteredDataProvider = new H.clustering.Provider(dataPoints, {
