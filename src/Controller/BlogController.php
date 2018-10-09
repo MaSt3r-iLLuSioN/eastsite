@@ -13,6 +13,7 @@ use App\Service\Liker;
 use App\Service\Commentor;
 use App\Service\KeywordHelper;
 use App\Entity\Blog;
+use App\Entity\Config;
 use App\Entity\CategoryGroup;
 use App\Entity\CategoryEntity;
 use App\Entity\FileEntity;
@@ -67,8 +68,8 @@ class BlogController extends BaseController
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         
-        $categoryGroup = $em->getRepository(CategoryGroup::class)->findBy(['title'=>'Blog Group']);
-        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$categoryGroup[0]]);
+        $config = $em->getRepository(Config::class)->find(1);
+        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$config->getBlogcategory()]);
         $choices = array();
         foreach($categories as $category)
         {
@@ -209,9 +210,8 @@ class BlogController extends BaseController
         
         $em = $this->getDoctrine()->getManager();
         
-        $categoryGroup = $em->getRepository(CategoryGroup::class)->findBy(['title'=>'Blog Group']);
-        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$categoryGroup[0]]);
-        
+        $config = $em->getRepository(Config::class)->find(1);
+        $categories = $em->getRepository(CategoryEntity::class)->findBy(['categorygroup'=>$config->getBlogcategory()]);
         
         $files = $blog->getFiles();
         $existingFiles = $fileUploaderUtil->makeExistingFilesArray($files, $this->getParameter('upload_directory'));
