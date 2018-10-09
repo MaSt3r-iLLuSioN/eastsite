@@ -70,6 +70,7 @@ services:
     app.heremapper:
         alias: App\Service\HereMapper
         public: true
+        
     app.security.login_form_authenticator:
         class: App\Security\LoginFormAuthenticator
         autowire: true
@@ -84,7 +85,12 @@ services:
             
     App\EventListener\ControllerListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.controller }
+            - { name: kernel.event_listener, event: kernel.controller, priority: 0 }
+        autowire: true
+        
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 1, method: onKernelException }
         autowire: true
 
     App\Form\Type\CKEditorType:
