@@ -1,3 +1,21 @@
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{% for breadcrumb in breadcrumbs %}{% for key,url in breadcrumb %}{
+    "@type": "ListItem",
+        "position": {{loop.index}},
+        "name": "{{key}}",
+        "item": "https://eastwaycustomhomes.com{{url}}"
+    },{% endfor %}{% endfor%}
+    {
+        "@type": "ListItem",
+        "position":{{breadcrumbCount}},
+        "name": "{{activeBreadcrumb}}",
+        "item": "https://eastwaycustomhomes.com{{activeBreadcrumbUrl}}"
+    }]
+}
+</script>
 <ol class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
         {% for key,url in breadcrumb %}

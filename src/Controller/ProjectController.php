@@ -24,6 +24,7 @@ use App\Form\Type\AutoTagsType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -569,7 +570,7 @@ class ProjectController extends BaseController
                 }
             }
             //no category and no posts? This page should not be displayed!!!
-            return $this->redirectToRoute('viewAllBlogPost');
+            throw new NotFoundHttpException("Page not found");
             
         }
     }

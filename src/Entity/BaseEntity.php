@@ -30,13 +30,13 @@ class BaseEntity
      */
     private $systemtitle = null;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $datetime = null;
     /**
-     @ORM\Column(type="datetime")
+     @ORM\Column(type="datetime", nullable=true)
      */
-    private $revision;
+    private $revision = null;
     /**
      * All Eniities have One Author.
      * @ORM\ManyToOne(targetEntity="App\Entity\User")

@@ -25,6 +25,7 @@ use Doctrine\ORM\PersistentCollection;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -44,7 +45,7 @@ class BlogController extends BaseController
         $breadcrumbs->addBreadcrumb('Home', '/');
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
-        $breadcrumbs->setActive('Blog');
+        $breadcrumbs->setActive('Blog', '/admin/blog');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository(Blog::class)->findAll();
@@ -64,7 +65,7 @@ class BlogController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blog', '/admin/blog');
-        $breadcrumbs->setActive('Add Post');
+        $breadcrumbs->setActive('Add Post', '/admin/blog/add');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         
@@ -205,7 +206,7 @@ class BlogController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blog', '/admin/blog');
         $breadcrumbs->addBreadcrumb($blog->getTitle(), '/blog/'.$blog->getId());
-        $breadcrumbs->setActive('Edit Post');
+        $breadcrumbs->setActive('Edit Post', '/admin/blog/'.$blog->getId().'/edit');
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();
@@ -360,7 +361,7 @@ class BlogController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blog', '/admin/blog');
         $breadcrumbs->addBreadcrumb($blog->getTitle(), '/blog/'.$blog->getId());
-        $breadcrumbs->setActive('Delete Post');
+        $breadcrumbs->setActive('Delete Post','/admin/blog/'.$blog->getId().'/delete');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -407,7 +408,7 @@ class BlogController extends BaseController
         parent::hideProfiler($this->getUser());
         //breadcrumbs
         $breadcrumbs->addBreadcrumb('Home', '/');
-        $breadcrumbs->setActive('Blog');
+        $breadcrumbs->setActive('Blog', '/blog');
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();
@@ -462,7 +463,7 @@ class BlogController extends BaseController
             $breadcrumbs->addBreadcrumb('Home', '/');
             $breadcrumbs->addBreadcrumb('Blog', '/blog');
             $category->handleBreadcrumbs($breadcrumbs,'blog', $category);
-            $breadcrumbs->setActive($blog->getTitle());
+            $breadcrumbs->setActive($blog->getTitle(), '/blog/'.$path);
             $breadcrumbs->setBreadcrumbs();
             
             $files = $blog->getFiles();
@@ -515,7 +516,7 @@ class BlogController extends BaseController
                     {
                         $category->handleBreadcrumbs($breadcrumbs,'blog', $category);
                     }
-                    $breadcrumbs->setActive($category->getTitle());
+                    $breadcrumbs->setActive($category->getTitle(), '/blog/'.$path);
                     $breadcrumbs->setBreadcrumbs();
 
                     $filterizer->setRepo(Blog::class);
@@ -547,7 +548,7 @@ class BlogController extends BaseController
                 }
             }
             //no category and no posts? This page should not be displayed!!!
-            return $this->redirectToRoute('viewAllBlogPost');
+            throw new NotFoundHttpException("Page not found");
             
         }
         

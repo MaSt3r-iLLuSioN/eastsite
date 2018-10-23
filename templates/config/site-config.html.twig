@@ -5,9 +5,13 @@
     <form class="shake" enctype="multipart/form-data" action="{{ path('siteConfig') }}" method="post">
         <fieldset>
             <legend>Basic Site Settings</legend>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="title" class="">Site Title:</label>
                 {{form_widget(form.title)}}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="phonenumber" class="">Phone Number:</label>
+                {{form_widget(form.phonenumber)}}
             </div>
             <label for="postfile">Site Logo:</label>
             {{form_widget(form.postfile)}}

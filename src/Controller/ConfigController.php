@@ -61,6 +61,14 @@ class ConfigController extends BaseController
                     ),
                     'data'=>$config->getTitle()
                 ))
+                ->add('phonenumber', TextType::class, array(
+                    'attr' => array(
+                        'placeholder' => 'Phone Number',
+                        'class' => 'form-control',
+                        'name' => 'phonenumber'
+                    ),
+                    'data'=>$config->getPhonenumber()
+                ))
                 ->add('facebooklink', TextType::class, array(
                     'attr' => array(
                         'placeholder' => 'Site Facebook Link',
@@ -199,6 +207,7 @@ class ConfigController extends BaseController
             $instagramLink = $form->get('instagramlink')->getData();
             $youtubeLink = $form->get('youtubelink')->getData();
             $linkedinLink = $form->get('linkedinlink')->getData();
+            $phonenumber = $form->get('phonenumber')->getData();
             
             $projectCat = $em->getRepository(CategoryGroup::class)->find($projectCatId);
             $blogCat = $em->getRepository(CategoryGroup::class)->find($blogCatId);
@@ -210,7 +219,7 @@ class ConfigController extends BaseController
             $config->setYoutubelink($youtubeLink);
             $config->setInstagramlink($instagramLink);
             $config->setTwitterlink($twitterLink);
-            
+            $config->setPhonenumber($phonenumber);
             $config->setProjectcategory($projectCat);
             $config->setBlogcategory($blogCat);
             $config->setMetadescription($metaDescription);
@@ -220,7 +229,7 @@ class ConfigController extends BaseController
             
             //get all the keyword entities based on input
             $keywords = $keywordHelper->getKeywordsByTitle($keywordData);
-            //reset projects keywords
+            //reset config keywords
             $config->resetKeywords();
             //loop through the keywords and add them
             foreach($keywords as $keyword)

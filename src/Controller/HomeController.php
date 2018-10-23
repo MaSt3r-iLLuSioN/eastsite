@@ -31,7 +31,7 @@ class HomeController extends BaseController{
     function home(Breadcrumbs $breadcrumbs)
     {
         parent::hideProfiler($this->getUser());
-        $breadcrumbs->setActive('Home');
+        $breadcrumbs->setActive('Home', '/');
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();

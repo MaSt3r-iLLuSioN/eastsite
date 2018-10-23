@@ -34,14 +34,17 @@ class KeywordHelper {
         $keywords = explode(',',$keywordString);
         foreach($keywords as $keyword)
         {
-            //make sure keyword doesnt already exists
-            if (!$this->keywordExists($keyword))
+            if($keyword != '' && $keyword != null && $keyword != ',')
             {
-                //add the new keyword
-                $keywordEntity = new KeywordEntity();
-                $keywordEntity->setTitle($keyword);
-                $this->em->persist($keywordEntity);
-                $this->em->flush();
+                //make sure keyword doesnt already exists
+                if (!$this->keywordExists($keyword))
+                {
+                    //add the new keyword
+                    $keywordEntity = new KeywordEntity();
+                    $keywordEntity->setTitle($keyword);
+                    $this->em->persist($keywordEntity);
+                    $this->em->flush();
+                }
             }
         }
     }
@@ -65,8 +68,11 @@ class KeywordHelper {
         $keywordEntities = array();
         foreach($keywords as $keyword)
         {
-            $keywordEntity = $this->em->getRepository(KeywordEntity::class)->findOneBy(array('title' => $keyword));
-            $keywordEntities[] = $keywordEntity;
+            if($keyword != '' && $keyword != null && $keyword != ',')
+            {
+                $keywordEntity = $this->em->getRepository(KeywordEntity::class)->findOneBy(array('title' => $keyword));
+                $keywordEntities[] = $keywordEntity;
+            }
         }
         return $keywordEntities;
     }

@@ -72,7 +72,10 @@ class ControllerListener implements EventSubscriberInterface {
         {
             $page = $this->em->getRepository(PageEntity::class)->findBy(array('url'=>$event->getRequest()->get('url')));
             //get page layout
-            $regions = $page[0]->getLayout()->getRegions();
+            if(is_array($page) && isset($page[0]))
+                $regions = $page[0]->getLayout()->getRegions();
+            else
+                $regions = array();
         }
         else
         {

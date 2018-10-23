@@ -1,0 +1,10 @@
+User-Agent: *
+Disallow:
+Disallow: /_profiler
+Disallow: /_profiler/* 
+Disallow: /_wdt
+Disallow: /_wdt/*
+Allow: /contact
+Disallow: /register
+Disallow: /login
+Disallow: /page/vendors

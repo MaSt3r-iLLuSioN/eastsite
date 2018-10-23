@@ -37,7 +37,7 @@ class DesignController extends BaseController
     {
         parent::hideProfiler($this->getUser());
         $breadcrumbs->addBreadcrumb('Home', '/');
-        $breadcrumbs->setActive('Home Designer');
+        $breadcrumbs->setActive('Home Designer', '/design');
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();
@@ -88,7 +88,7 @@ class DesignController extends BaseController
         $breadcrumbs->addBreadcrumb('Home', '/');
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
-        $breadcrumbs->setActive('Home Designer');
+        $breadcrumbs->setActive('Home Designer', '/admin/designer');
         $breadcrumbs->setBreadcrumbs();
         return $this->render('design/wall-textures.html.twig',array(
         ));
@@ -105,7 +105,7 @@ class DesignController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
         $breadcrumbs->addBreadcrumb('Home Designer', '/admin/designer');
         $breadcrumbs->addBreadcrumb('Models', '/admin/designer/models');
-        $breadcrumbs->setActive('Add Model');
+        $breadcrumbs->setActive('Add Model', '/admin/designer/models/add');
         $breadcrumbs->setBreadcrumbs();
         return $this->render('design/wall-textures.html.twig',array(
         ));
@@ -122,7 +122,7 @@ class DesignController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
         $breadcrumbs->addBreadcrumb('Home Designer', '/admin/designer');
         $breadcrumbs->addBreadcrumb('Models', '/admin/designer/models');
-        $breadcrumbs->setActive('Delete Model');
+        $breadcrumbs->setActive('Delete Model', '/admin/designer/models/delete');
         $breadcrumbs->setBreadcrumbs();
         return $this->render('design/wall-textures.html.twig',array(
         ));
@@ -138,7 +138,7 @@ class DesignController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
         $breadcrumbs->addBreadcrumb('Home Designer', '/admin/designer');
-        $breadcrumbs->setActive('Models');
+        $breadcrumbs->setActive('Models', '/admin/designer/models');
         $breadcrumbs->setBreadcrumbs();
         return $this->render('design/wall-textures.html.twig',array(
         ));
@@ -156,7 +156,7 @@ class DesignController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashboard', '/admin');
         $breadcrumbs->addBreadcrumb('Home Designer', '/admin/designer');
         $breadcrumbs->addBreadcrumb('Wall Textures', '/admin/designer/walls');
-        $breadcrumbs->setActive('Add Wall Texture');
+        $breadcrumbs->setActive('Add Wall Texture', '/admin/designer/walls/add');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         $categoryGroup = $em->getRepository(CategoryGroup::class)->findBy(['title'=>'Designer Walls']);

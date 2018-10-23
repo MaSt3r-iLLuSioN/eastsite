@@ -18,14 +18,25 @@ class Breadcrumbs {
     private $breadcrumbs;
     private $active;
     private $twig;
+    private $count = 0;
+    private $activeUrl = '';
     public function __construct(Twig_Environment $env)
     {
         $this->breadcrumbs = array();
         $this->twig = $env;
     }
-    public function setActive(string $title)
+    public function getActiveUrl()
+    {
+        return $this->activeUrl;
+    }
+    public function setActive(string $title, string $url = null)
     {
         $this->active = $title;
+        if ($url != null)
+            $this->activeUrl = $url;
+        else
+            $this->activeUrl = '';
+        $this->count++;
     }
     public function getActive()
     {
@@ -41,6 +52,7 @@ class Breadcrumbs {
                     return;
         }
         $this->breadcrumbs[] = array($title=>$url);
+        $this->count++;
     }
     private function getBreadcrumbs()
     {
@@ -50,5 +62,7 @@ class Breadcrumbs {
     {
         $this->twig->addGlobal('breadcrumbs', $this->getBreadcrumbs());
         $this->twig->addGlobal('activeBreadcrumb', $this->getActive());
+        $this->twig->addGlobal('activeBreadcrumbUrl', $this->getActiveUrl());
+        $this->twig->addGlobal('breadcrumbCount', $this->count);
     }
 }

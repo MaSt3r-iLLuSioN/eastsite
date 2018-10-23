@@ -17,10 +17,9 @@ use getID3;
  */
 class FileUploaderUtility {
     //put your code here
-    public function makeExistingFilesArray($files, string $directory) : array
+    public function makeExistingFilesArray($files, string $directory)
     {
         $existingFiles = array();
-        
         foreach($files as $file)
         {
             if($file instanceof FileEntity)

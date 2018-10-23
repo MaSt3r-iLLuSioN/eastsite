@@ -28,7 +28,7 @@ class ACLController extends BaseController
         $breadcrumbs->addBreadcrumb('Home', '/');
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
-        $breadcrumbs->setActive('Roles');
+        $breadcrumbs->setActive('Roles', '/admin/roles');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         //get all regions
@@ -99,7 +99,7 @@ class ACLController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Roles', '/admin/roles');
-        $breadcrumbs->setActive('Add Role');
+        $breadcrumbs->setActive('Add Role', '/admin/roles/add');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -151,7 +151,7 @@ class ACLController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Roles', '/admin/roles');
-        $breadcrumbs->setActive('Edit Role "'.$role->getTitle().'"');
+        $breadcrumbs->setActive('Edit Role "'.$role->getTitle().'"', '/admin/roles/'.$role->getId() . '/edit');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -199,7 +199,7 @@ class ACLController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Roles', '/admin/roles');
-        $breadcrumbs->setActive('Delete Role "' . $role->getTitle().'"');
+        $breadcrumbs->setActive('Delete Role "' . $role->getTitle().'"', '/admin/roles/'.$role->getId().'/delete');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -250,7 +250,7 @@ class ACLController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Roles','/admin/roles');
-        $breadcrumbs->setActive('Edit Role "'.$role->getTitle() . '" Permissions');
+        $breadcrumbs->setActive('Edit Role "'.$role->getTitle() . '" Permissions', '/admin/roles/'.$role->getId().'/permissions');
         $breadcrumbs->setBreadcrumbs();
         //this is were we will get a custom form for the block type (makes it easier to add different types)
         $em = $this->getDoctrine()->getManager();

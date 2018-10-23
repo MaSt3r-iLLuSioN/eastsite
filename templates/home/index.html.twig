@@ -3,7 +3,21 @@
 {% block metakeywords %}
         <meta name="keywords" content="{% for keyword in config.keywords %}{{keyword.title}},{% endfor %}">
         <meta name="description" content="{{config.metadescription}}">
+        <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "Organization",
+          "url": "https://eastwaycustomhomes.com",
+          "logo": "https://eastwaycustomhomes.com{{config.files[0].url}}",
+          "contactPoint": [{
+            "@type": "ContactPoint",
+            "telephone": "+{{config.phonenumber}}",
+            "contactType": "sales"
+          }]
+        }
+        </script>
 {% endblock %}
 {% block page_header %}Eastway Custom Homes{% endblock %}
-{% block body %}     
+{% block body %}   
+    <div style="display:none;" id="seo_freq">Weekly</div>
 {% endblock %}

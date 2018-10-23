@@ -28,7 +28,7 @@ class BlockController extends BaseController
         $breadcrumbs->addBreadcrumb('Home', '/');
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
-        $breadcrumbs->setActive('Blocks');
+        $breadcrumbs->setActive('Blocks', '/admin/blocks');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         //get all regions
@@ -54,7 +54,7 @@ class BlockController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blocks','/admin/blocks');
-        $breadcrumbs->setActive('Add Block');
+        $breadcrumbs->setActive('Add Block', '/admin/blocks/add');
         $breadcrumbs->setBreadcrumbs();
         
         $em = $this->getDoctrine()->getManager();
@@ -198,7 +198,7 @@ class BlockController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blocks','/admin/blocks');
-        $breadcrumbs->setActive('Edit Block: '.$block->getTitle());
+        $breadcrumbs->setActive('Edit Block: '.$block->getTitle(), '/admin/blocks/'.$block->getId().'/edit');
         $breadcrumbs->setBreadcrumbs();
         //this is were we will get a custom form for the block type (makes it easier to add different types)
         $em = $this->getDoctrine()->getManager();
@@ -396,7 +396,7 @@ class BlockController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blocks','/admin/blocks');
-        $breadcrumbs->setActive('Delete Block: '.$block->getTitle());
+        $breadcrumbs->setActive('Delete Block: '.$block->getTitle(), '/admin/blocks/'.$block->getId().'/delete');
         $breadcrumbs->setBreadcrumbs();
         $formFactory = Forms::createFormFactoryBuilder()
                 ->addExtension(new HttpFoundationExtension())
@@ -445,7 +445,7 @@ class BlockController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Blocks','/admin/blocks');
-        $breadcrumbs->setActive('View Block: '.$block->getTitle());
+        $breadcrumbs->setActive('View Block: '.$block->getTitle(), '/admin/blocks/'.$block->getId().'/view');
         $breadcrumbs->setBreadcrumbs();
         $em = $this->getDoctrine()->getManager();
         $block->setBlockClass($em, $this->container);

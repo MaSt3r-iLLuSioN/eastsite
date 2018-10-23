@@ -50,5 +50,10 @@
                 {{project.content|raw}}
             </div>
         </section>
+            {% if project.status == 1 %}
+                <div style="display:none;" id="seo_freq">weekly</div>
+            {% else %}
+                <div style="display:none;" id="seo_freq">yearly</div>
+            {% endif %}
     </article>
 {% endblock %}

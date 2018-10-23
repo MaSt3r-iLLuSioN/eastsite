@@ -27,7 +27,7 @@ class CategoryController extends BaseController
         $breadcrumbs->addBreadcrumb('Account', '/account');
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Category Groups', '/admin/category');
-        $breadcrumbs->setActive('Add Category Group');
+        $breadcrumbs->setActive('Add Category Group','/admin/category/add/group');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -72,7 +72,7 @@ class CategoryController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Category Groups', '/admin/category');
         $breadcrumbs->addBreadcrumb('View Category Group: '.$group->getTitle(), '/admin/category/'.$group->getId());
-        $breadcrumbs->setActive('Edit Category Group');
+        $breadcrumbs->setActive('Edit Category Group','/admin/category/'.$group->getId().'/edit');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()
@@ -116,7 +116,7 @@ class CategoryController extends BaseController
         $breadcrumbs->addBreadcrumb('Admin Dashoard', '/admin');
         $breadcrumbs->addBreadcrumb('Category Groups', '/admin/category');
         $breadcrumbs->addBreadcrumb('View Category Group: '.$group->getTitle(), '/admin/category/'.$group->getId());
-        $breadcrumbs->setActive('Delete Category Group');
+        $breadcrumbs->setActive('Delete Category Group','/admin/category/'.$group->getId().'/delete');
         $breadcrumbs->setBreadcrumbs();
         
         $formFactory = Forms::createFormFactoryBuilder()

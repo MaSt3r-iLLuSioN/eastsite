@@ -47,6 +47,10 @@ class Config
      */
     private $youtubelink = null;
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $phonenumber = null;
+    /**
      * Many entities have Many files.
      * @ORM\ManyToMany(targetEntity="FileEntity")
      * @ORM\JoinTable(
@@ -120,6 +124,14 @@ class Config
     {
         $this->files = new ArrayCollection();
         $this->keywords = new ArrayCollection();
+    }
+    public function getPhonenumber()
+    {
+        return $this->phonenumber;
+    }
+    public function setPhonenumber($phone)
+    {
+        $this->phonenumber = $phone;
     }
     public function getInstagramlink()
     {
@@ -197,7 +209,7 @@ class Config
     {
         return $this->keywords;
     }
-    public function getMetadescription() : string
+    public function getMetadescription()
     {
         return $this->metadescription;
     }

@@ -16,6 +16,7 @@ use App\Form\Type\AutoTagsType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
@@ -597,8 +598,10 @@ class PageController extends BaseController
     {
         parent::hideProfiler($this->getUser());
         $page = $this->getDoctrine()->getManager()->getRepository(PageEntity::class)->findBy(array('url'=>$url));
-        if(!$page)
-            return $this->redirectToRoute('app_home_home');
+        if(!is_array($page) || !isset($page[0]))
+        {
+            throw new NotFoundHttpException("Page not found");
+        }
         $page = $page[0];
         //set breadcrumbs
         $breadcrumbs->addBreadcrumb('Home', '/');
